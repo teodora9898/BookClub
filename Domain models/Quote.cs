@@ -6,6 +6,6 @@ namespace BookClub.Domain_models
 {
     public class Quote
     {
-        public String text { get; set; }
+        public string Text { get; set; }
     }
 }

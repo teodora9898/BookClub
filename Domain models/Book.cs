@@ -4,12 +4,12 @@ namespace BookClub.Domain_models
 {
     public class Book
     {
-        public String id { get; set; }
-        public String name { get; set; }
-        public String genre { get; set; }
-        public String publisher { get; set; }
-        public String yearOfPublish { get; set; }
-        public String summary { get; set; }
-        public String numberOfPages { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Genre { get; set; }
+        public string Publisher { get; set; }
+        public string YearOfPublish { get; set; }
+        public string Summary { get; set; }
+        public string NumberOfPages { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace BookClub.Domain_models
         public string Lastname { get; set; }
         public string Birthday { get; set; }
         public string Biography { get; set; }
+        public List<Book> PublishedBooks { get; set; }
     }
 }

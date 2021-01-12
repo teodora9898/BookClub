@@ -1,9 +1,12 @@
-﻿using Neo4jClient;
+﻿using BookClub.Domain_models;
+using Neo4jClient;
+using Neo4jClient.Cypher;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -19,6 +22,31 @@ namespace BookClub
 
         private void SignInForm_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void signIn(object sender, MouseEventArgs e)
+        {
+            String Username = ".*" + usernameInput.Text + ".*";
+            String Password = ".*" + passwordInput.Text + ".*";
+
+            Dictionary<string, object> signInQueryDict = new Dictionary<string, object>();
+            signInQueryDict.Add("Username", Username);
+            signInQueryDict.Add("Password", Password);
+
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n:User) where n.Password =~ {Password} and n.Username =~ {Username} return n",
+                                                           signInQueryDict, CypherResultMode.Set);
+
+            List<User> users = ((IRawGraphClient)client).ExecuteGetCypherResults<User>(query).ToList();
+
+            if(users.Count == 0)
+            {
+                MessageBox.Show("Username ili Password nisu ispravni! Pokusajte ponovo!");
+            }
+            else
+            {
+                MessageBox.Show("Uspesno ste se prijavili!");
+            }
 
         }
     }

@@ -45,6 +45,7 @@ namespace BookClub
             }
             else
             {
+                Help.Global.ActiveUser = users.ElementAt(0);
                 MessageBox.Show("Uspesno ste se prijavili!");
             }
 

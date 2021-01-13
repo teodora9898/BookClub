@@ -81,6 +81,7 @@
             this.signInButton.TabIndex = 2;
             this.signInButton.Text = "Sign In";
             this.signInButton.UseVisualStyleBackColor = true;
+            this.signInButton.Click += new System.EventHandler(this.signInButton_Click);
             this.signInButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.signIn);
             // 
             // SignInForm

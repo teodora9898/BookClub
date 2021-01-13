@@ -6,7 +6,7 @@ namespace BookClub.Domain_models
 {
     public class BookUser
     {
-        public DateTime MyProperty { get; set; }
+        public DateTime UploadDate { get; set; }
         public Book Book { get; set; }
         public User User { get; set; }
 

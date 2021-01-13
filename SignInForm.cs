@@ -50,5 +50,10 @@ namespace BookClub
             }
 
         }
+
+        private void signInButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

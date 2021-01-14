@@ -74,7 +74,9 @@ namespace BookClub
 
         private void signUpUser(object sender, MouseEventArgs e)
         {
-
+            SignUpForm signUpForm = new SignUpForm();
+            signUpForm.client = client;
+            signUpForm.ShowDialog();
         }
     }
 }

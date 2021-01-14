@@ -11,6 +11,6 @@ namespace BookClub.Domain_models
         public String YearOfPublish { get; set; }
         public String Summary { get; set; }
         public String NumberOfPages { get; set; }
-        public String UploadedBy { get; set; }
+        
     }
 }

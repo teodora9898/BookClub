@@ -23,37 +23,41 @@ namespace BookClub
 
         private void myBooksButton_MouseClick(object sender, MouseEventArgs e)
         {
-            String UploadedBy = Global.ActiveUser.Username;
+            String UploadedBy = ".*"+Global.ActiveUser.Username+ ".*";
 
             Dictionary<string, object> myBooksDict = new Dictionary<string, object>();
             myBooksDict.Add("UploadedBy", UploadedBy);
             
             //todo : smisli query : preko grane ili preko propertija? Mozda je bolje opreko grane?
-            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (b)-[r:UPLOADED_BY]->(u) where u.Username =~ {UpoladedBy} return r{Book:b}",
+            var query = new Neo4jClient.Cypher.CypherQuery(" match (w)-[r1:WROTE]->(b)-[r:UPLOADEDBY]->(u) where u.Username =~ {UploadedBy} return r1{Book:b, Writer:w}",
                                                          myBooksDict, CypherResultMode.Set);
+            List<BookWriter> uploadedBooks = ((IRawGraphClient)client).ExecuteGetCypherResults<BookWriter>(query).ToList();
 
-            List<BookUser> uploadedBooks = ((IRawGraphClient)client).ExecuteGetCypherResults<BookUser>(query).ToList();
-
-            
-            Dictionary<string, object> bookWriterDict = new Dictionary<string, object>();
-            List<BookWriter> writers;
-            foreach (var book in uploadedBooks)
+            for (int i = 0; i<uploadedBooks.Count; i++)
             {
-                Books.Items.Add(book.Book.Name);
-                bookWriterDict.Add("BookName", book.Book.Name);
-                var queryWriters = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (w)-[r:WROTE]->(b) where b.Name =~ {BookName} return r{Writer:w}",
-                     bookWriterDict, CypherResultMode.Set);
-                 writers = ((IRawGraphClient)client).ExecuteGetCypherResults<BookWriter>(queryWriters).ToList();
-                Writers.Items.Add(writers.ElementAt(0).Writer.Name + " " + writers.ElementAt(0).Writer.Lastname);
-                bookWriterDict.Remove("BookName");
-
+                Books.Items.Add(uploadedBooks.ElementAt(i).Book.Name);
+                Writers.Items.Add(uploadedBooks.ElementAt(i).Writer.Name + " " + uploadedBooks.ElementAt(i).Writer.Lastname);
+               
             }
-
+           
         }
 
         private void BookForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void bookBookmarksButton_Click(object sender, EventArgs e)
+        {
+            String activeUser = Global.ActiveUser.Username;
+
+        }
+
+        private void addBookButton_Click(object sender, EventArgs e)
+        {
+            AddBookForm addBookForm = new AddBookForm();
+            addBookForm.client = client;
+            addBookForm.ShowDialog();
         }
     }
 }

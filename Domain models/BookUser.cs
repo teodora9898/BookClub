@@ -9,6 +9,9 @@ namespace BookClub.Domain_models
         public DateTime UploadDate { get; set; }
         public Book Book { get; set; }
         public User User { get; set; }
+       // public User UploadedByUser { get; set; }
+
+        public String Bookmarked { get; set; }
 
     }
 }

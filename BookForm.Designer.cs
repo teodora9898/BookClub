@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.myBooksButton = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bookBookmarksButton = new System.Windows.Forms.Button();
             this.Books = new System.Windows.Forms.ListBox();
             this.Writers = new System.Windows.Forms.ListBox();
             this.addBookButton = new System.Windows.Forms.Button();
@@ -46,14 +46,15 @@
             this.myBooksButton.Click += new System.EventHandler(this.myBooksButton_Click);
             this.myBooksButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.myBooksButton_MouseClick);
             // 
-            // button2
+            // bookBookmarksButton
             // 
-            this.button2.Location = new System.Drawing.Point(133, 220);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(150, 62);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Book bookmarks";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bookBookmarksButton.Location = new System.Drawing.Point(133, 220);
+            this.bookBookmarksButton.Name = "bookBookmarksButton";
+            this.bookBookmarksButton.Size = new System.Drawing.Size(150, 62);
+            this.bookBookmarksButton.TabIndex = 0;
+            this.bookBookmarksButton.Text = "Book bookmarks";
+            this.bookBookmarksButton.UseVisualStyleBackColor = true;
+            this.bookBookmarksButton.Click += new System.EventHandler(this.bookBookmarksButton_Click);
             // 
             // Books
             // 
@@ -81,6 +82,7 @@
             this.addBookButton.TabIndex = 2;
             this.addBookButton.Text = "Add book";
             this.addBookButton.UseVisualStyleBackColor = true;
+            this.addBookButton.Click += new System.EventHandler(this.addBookButton_Click);
             // 
             // BookForm
             // 
@@ -90,7 +92,7 @@
             this.Controls.Add(this.addBookButton);
             this.Controls.Add(this.Writers);
             this.Controls.Add(this.Books);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.bookBookmarksButton);
             this.Controls.Add(this.myBooksButton);
             this.Name = "BookForm";
             this.Text = "BookForm";
@@ -102,7 +104,7 @@
         #endregion
 
         private System.Windows.Forms.Button myBooksButton;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bookBookmarksButton;
         private System.Windows.Forms.ListBox Books;
         private System.Windows.Forms.ListBox Writers;
         private System.Windows.Forms.Button addBookButton;

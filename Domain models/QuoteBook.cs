@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BookClub.Domain_models
 {
-    public class Quote
+    public class QuoteBook
     {
-        public string Text { get; set; }
-        public string UploadedBy { get; set; }
+        public Quote Quote { get; set; }
+        public Book Book { get; set; }
     }
 }

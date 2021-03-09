@@ -43,6 +43,7 @@
             this.myBooksButton.TabIndex = 0;
             this.myBooksButton.Text = "My books";
             this.myBooksButton.UseVisualStyleBackColor = true;
+            this.myBooksButton.Click += new System.EventHandler(this.myBooksButton_Click);
             this.myBooksButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.myBooksButton_MouseClick);
             // 
             // button2
@@ -74,7 +75,7 @@
             // 
             // addBookButton
             // 
-            this.addBookButton.Location = new System.Drawing.Point(133, 415);
+            this.addBookButton.Location = new System.Drawing.Point(133, 399);
             this.addBookButton.Name = "addBookButton";
             this.addBookButton.Size = new System.Drawing.Size(150, 60);
             this.addBookButton.TabIndex = 2;

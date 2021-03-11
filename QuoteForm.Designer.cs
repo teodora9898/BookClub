@@ -63,6 +63,7 @@ namespace BookClub
             this.addQuoteButton.TabIndex = 2;
             this.addQuoteButton.Text = "Add quote";
             this.addQuoteButton.UseVisualStyleBackColor = true;
+            this.addQuoteButton.Click += new System.EventHandler(this.addQuoteButton_Click);
             // 
             // Quotes
             // 

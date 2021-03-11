@@ -45,5 +45,12 @@ namespace BookClub
 
             }
         }
+
+        private void addQuoteButton_Click(object sender, EventArgs e)
+        {
+            AddQuoteForm addQuoteForm = new AddQuoteForm();
+            addQuoteForm.client = client;
+            addQuoteForm.ShowDialog();
+        }
     }
 }

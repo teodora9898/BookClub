@@ -31,9 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.bookNameTextBox = new System.Windows.Forms.TextBox();
             this.bookGenreTextBox = new System.Windows.Forms.TextBox();
-            this.numberOfPagesTextBox = new System.Windows.Forms.TextBox();
             this.summaryTextBox = new System.Windows.Forms.TextBox();
-            this.yearOfPublishpublisherTextBox = new System.Windows.Forms.TextBox();
             this.publisherTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -42,23 +40,17 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.writerNameTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.writerLastnameTextBox = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.biographyTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.additionalInformationTextBox = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider3 = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberOfPagesnumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.yearOfPublishnumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.backButton = new System.Windows.Forms.Button();
+            this.writersComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.addWriterFormButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).BeginInit();
@@ -81,13 +73,6 @@
             this.bookGenreTextBox.Size = new System.Drawing.Size(143, 27);
             this.bookGenreTextBox.TabIndex = 0;
             // 
-            // numberOfPagesTextBox
-            // 
-            this.numberOfPagesTextBox.Location = new System.Drawing.Point(175, 328);
-            this.numberOfPagesTextBox.Name = "numberOfPagesTextBox";
-            this.numberOfPagesTextBox.Size = new System.Drawing.Size(143, 27);
-            this.numberOfPagesTextBox.TabIndex = 0;
-            // 
             // summaryTextBox
             // 
             this.summaryTextBox.Location = new System.Drawing.Point(175, 429);
@@ -96,13 +81,6 @@
             this.summaryTextBox.Size = new System.Drawing.Size(253, 173);
             this.summaryTextBox.TabIndex = 0;
             this.summaryTextBox.TextChanged += new System.EventHandler(this.summaryTextBox_TextChanged);
-            // 
-            // yearOfPublishpublisherTextBox
-            // 
-            this.yearOfPublishpublisherTextBox.Location = new System.Drawing.Point(175, 256);
-            this.yearOfPublishpublisherTextBox.Name = "yearOfPublishpublisherTextBox";
-            this.yearOfPublishpublisherTextBox.Size = new System.Drawing.Size(143, 27);
-            this.yearOfPublishpublisherTextBox.TabIndex = 0;
             // 
             // publisherTextBox
             // 
@@ -173,91 +151,7 @@
             this.addButton.TabIndex = 2;
             this.addButton.Text = "Add ";
             this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(525, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(91, 20);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Writer name";
-            // 
-            // writerNameTextBox
-            // 
-            this.writerNameTextBox.Location = new System.Drawing.Point(671, 39);
-            this.writerNameTextBox.Name = "writerNameTextBox";
-            this.writerNameTextBox.Size = new System.Drawing.Size(143, 27);
-            this.writerNameTextBox.TabIndex = 0;
-            this.writerNameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.writerNameTextBox_Validating);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(525, 118);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(114, 20);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Writer lastname";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(525, 186);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(64, 20);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "Birthday";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(525, 263);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 20);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "Biography";
-            // 
-            // writerLastnameTextBox
-            // 
-            this.writerLastnameTextBox.Location = new System.Drawing.Point(671, 111);
-            this.writerLastnameTextBox.Name = "writerLastnameTextBox";
-            this.writerLastnameTextBox.Size = new System.Drawing.Size(143, 27);
-            this.writerLastnameTextBox.TabIndex = 7;
-            this.writerLastnameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.writerLastnameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.writerLastnameTextBox_Validating);
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(671, 186);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(250, 27);
-            this.dateTimePicker1.TabIndex = 9;
-            // 
-            // biographyTextBox
-            // 
-            this.biographyTextBox.Location = new System.Drawing.Point(671, 260);
-            this.biographyTextBox.Multiline = true;
-            this.biographyTextBox.Name = "biographyTextBox";
-            this.biographyTextBox.Size = new System.Drawing.Size(246, 194);
-            this.biographyTextBox.TabIndex = 10;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(525, 503);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(161, 20);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "Additional information";
-            // 
-            // additionalInformationTextBox
-            // 
-            this.additionalInformationTextBox.Location = new System.Drawing.Point(732, 500);
-            this.additionalInformationTextBox.Name = "additionalInformationTextBox";
-            this.additionalInformationTextBox.Size = new System.Drawing.Size(185, 27);
-            this.additionalInformationTextBox.TabIndex = 13;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click_1);
             // 
             // errorProvider1
             // 
@@ -273,7 +167,7 @@
             // 
             // numberOfPagesnumericUpDown
             // 
-            this.numberOfPagesnumericUpDown.Location = new System.Drawing.Point(361, 328);
+            this.numberOfPagesnumericUpDown.Location = new System.Drawing.Point(175, 335);
             this.numberOfPagesnumericUpDown.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -285,7 +179,7 @@
             // 
             // yearOfPublishnumericUpDown
             // 
-            this.yearOfPublishnumericUpDown.Location = new System.Drawing.Point(361, 260);
+            this.yearOfPublishnumericUpDown.Location = new System.Drawing.Point(175, 263);
             this.yearOfPublishnumericUpDown.Maximum = new decimal(new int[] {
             2021,
             0,
@@ -305,24 +199,54 @@
             this.backButton.UseVisualStyleBackColor = true;
             this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
+            // writersComboBox
+            // 
+            this.writersComboBox.FormattingEnabled = true;
+            this.writersComboBox.Location = new System.Drawing.Point(664, 110);
+            this.writersComboBox.Name = "writersComboBox";
+            this.writersComboBox.Size = new System.Drawing.Size(151, 28);
+            this.writersComboBox.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(664, 65);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(150, 20);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Choose writer\'s name";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(664, 186);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(317, 20);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "If you can not find desired writer, please add it";
+            // 
+            // addWriterFormButton
+            // 
+            this.addWriterFormButton.Location = new System.Drawing.Point(664, 223);
+            this.addWriterFormButton.Name = "addWriterFormButton";
+            this.addWriterFormButton.Size = new System.Drawing.Size(94, 29);
+            this.addWriterFormButton.TabIndex = 20;
+            this.addWriterFormButton.Text = "Add writer";
+            this.addWriterFormButton.UseVisualStyleBackColor = true;
+            this.addWriterFormButton.Click += new System.EventHandler(this.addWriterFormButton_Click);
+            // 
             // AddBookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1005, 722);
+            this.Controls.Add(this.addWriterFormButton);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.writersComboBox);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.yearOfPublishnumericUpDown);
             this.Controls.Add(this.numberOfPagesnumericUpDown);
-            this.Controls.Add(this.additionalInformationTextBox);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.biographyTextBox);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.writerLastnameTextBox);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.writerNameTextBox);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -331,9 +255,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.publisherTextBox);
-            this.Controls.Add(this.yearOfPublishpublisherTextBox);
             this.Controls.Add(this.summaryTextBox);
-            this.Controls.Add(this.numberOfPagesTextBox);
             this.Controls.Add(this.bookGenreTextBox);
             this.Controls.Add(this.bookNameTextBox);
             this.Name = "AddBookForm";
@@ -353,9 +275,7 @@
 
         private System.Windows.Forms.TextBox bookNameTextBox;
         private System.Windows.Forms.TextBox bookGenreTextBox;
-        private System.Windows.Forms.TextBox numberOfPagesTextBox;
         private System.Windows.Forms.TextBox summaryTextBox;
-        private System.Windows.Forms.TextBox yearOfPublishpublisherTextBox;
         private System.Windows.Forms.TextBox publisherTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -364,22 +284,16 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox writerNameTextBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox writerLastnameTextBox;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox biographyTextBox;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox additionalInformationTextBox;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ErrorProvider errorProvider2;
         private System.Windows.Forms.ErrorProvider errorProvider3;
         private System.Windows.Forms.NumericUpDown numberOfPagesnumericUpDown;
         private System.Windows.Forms.NumericUpDown yearOfPublishnumericUpDown;
         private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox writersComboBox;
+        private System.Windows.Forms.Button addWriterFormButton;
     }
 }

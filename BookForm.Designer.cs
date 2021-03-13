@@ -63,6 +63,7 @@
             this.Books.Name = "Books";
             this.Books.Size = new System.Drawing.Size(232, 184);
             this.Books.TabIndex = 1;
+            this.Books.SelectedIndexChanged += new System.EventHandler(this.Books_SelectedIndexChanged);
             // 
             // Writers
             // 

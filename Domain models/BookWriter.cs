@@ -10,6 +10,7 @@ namespace BookClub.Domain_models
         public Writer Writer { get; set; }
         public String TimeSpanOfWritingBook { get; set; }
         public String InterestingFacts { get; set; }
+        public String AdditionalInformation { get; set; }
 
         //todo razmisli da li treba da uacis listu koautora
     }

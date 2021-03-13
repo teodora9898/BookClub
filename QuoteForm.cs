@@ -19,30 +19,19 @@ namespace BookClub
 
         private void myQuoteButton_Click(object sender, EventArgs e)
         {
-            String UploadedBy = ".*" + Global.ActiveUser.Username + ".*";
+            String UploadedBy = Global.ActiveUser.Username;
 
-            Dictionary<string, object> myQuotesDict = new Dictionary<string, object>();
-            myQuotesDict.Add("UploadedBy", UploadedBy);
+            Dictionary<string, object> myBooksDict = new Dictionary<string, object>();
+            myBooksDict.Add("UploadedBy", UploadedBy);
+           
+            var query = new Neo4jClient.Cypher.CypherQuery("match (q)-[r:ADDED_BY]->(u) where u.Username = '"+UploadedBy+"' return r{Quote:q}",
+                                                         myBooksDict, CypherResultMode.Set);
+            List<QuoteBook> uploadedQuotes = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(query).ToList();
 
-            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (q)-[r:UPLOADED_BY]->(u) where u.Username =~ {UploadedBy} return r",
-                                                         myQuotesDict, CypherResultMode.Set);
-
-            List<Quote> uploadedQuotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Quote>(query).ToList();
-
-
-            Dictionary<string, object> quoteBookDict = new Dictionary<string, object>();
-            List<QuoteBook> books;
-            foreach (var quote in uploadedQuotes)
+            for (int i = 0; i< uploadedQuotes.Count; i++)
             {
-                String BookName = ".*" +
-                Quotes.Items.Add(quote.Text);
-                quoteBookDict.Add("Text", quote.Text);
-                var queryBooks = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (q)-[r:ISEXTRACTEDFROM]->(b) where b.Name =~ {BookName} return r{Quote:q}",
-                     quoteBookDict, CypherResultMode.Set);
-                books = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(queryBooks).ToList();
-                Books.Items.Add(books.ElementAt(0).Book.Name);
-                myQuotesDict.Remove("BookName");
-
+                Quotes.Items.Add(uploadedQuotes.ElementAt(i).Quote.Text);
+                Books.Items.Add(uploadedQuotes.ElementAt(i).Book.Name);
             }
         }
 

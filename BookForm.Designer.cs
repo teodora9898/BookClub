@@ -43,7 +43,7 @@
             this.myBooksButton.TabIndex = 0;
             this.myBooksButton.Text = "My books";
             this.myBooksButton.UseVisualStyleBackColor = true;
-            this.myBooksButton.Click += new System.EventHandler(this.myBooksButton_Click);
+            //this.myBooksButton.Click += new System.EventHandler(this.myBooksButton_Click);
             this.myBooksButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.myBooksButton_MouseClick);
             // 
             // bookBookmarksButton

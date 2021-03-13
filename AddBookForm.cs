@@ -23,7 +23,15 @@ namespace BookClub
 
         private void AddBookForm_Load(object sender, EventArgs e)
         {
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (w:Writer) return distinct w",
+                                                        new Dictionary<string, object>(), CypherResultMode.Set);
 
+            List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query).ToList();
+
+            foreach (Writer u in writers)
+            {
+                writersComboBox.Items.Add(u.Name + " " + u.Lastname);
+            }
         }
 
         private void summaryTextBox_TextChanged(object sender, EventArgs e)
@@ -35,9 +43,9 @@ namespace BookClub
         {
 
         }
-        private Tuple<Book, Writer, BookWriter, BookUser > CreateBookAndWriter()
+        private Tuple<Book, Writer, BookWriter, BookUser> CreateBookAndWriter()
         {
-            
+
             Book book = new Book()
             {
                 Name = bookNameTextBox.Text,
@@ -47,18 +55,23 @@ namespace BookClub
                 NumberOfPages = numberOfPagesnumericUpDown.Value.ToString(),
                 YearOfPublish = yearOfPublishnumericUpDown.Value.ToString()
             };
+            /*
+             writer je vec doda posebnom metodom u bazu, ovde se uzima samo njegovo ime i prez
+            da bi mogli da pristupimo topm cvoru i napravimo vezu sa njim
+             */
+          
+            var comboBoxInput = writersComboBox.SelectedItem.ToString();
             Writer writer = new Writer()
             {
-                Name = writerNameTextBox.Text,
-                Lastname = writerLastnameTextBox.Text,
-                Biography = biographyTextBox.Text,
-                Birthday = dateTimePicker1.Value.ToString()
+                Name = comboBoxInput.Split(new[] { ' ' }, 2)[0],
+                Lastname = comboBoxInput.Split(new[] { ' ' }, 2)[1]
             };
+
             BookWriter bookWriter = new BookWriter()
             {
                 Book = book,
                 Writer = writer,
-                InterestingFacts = additionalInformationTextBox.Text
+           
             };
             BookUser bookUser = new BookUser()
             {
@@ -66,53 +79,124 @@ namespace BookClub
                 User = Global.ActiveUser,
                 UploadDate = DateTime.Today
             };
-            
+
 
             return new Tuple<Book, Writer, BookWriter, BookUser>(book, writer, bookWriter, bookUser);
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void bookNameTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if(string.IsNullOrEmpty(bookNameTextBox.Text))
+            {
+                e.Cancel = true;
+                bookNameTextBox.Focus();
+                errorProvider1.SetError(bookNameTextBox, "Book name is required!");
+
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(bookNameTextBox, null);
+            }
+        }
+
+        //private void writerNameTextBox_Validating(object sender, CancelEventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(writerNameTextBox.Text))
+        //    {
+        //        e.Cancel = true;
+        //        writerNameTextBox.Focus();
+        //        errorProvider2.SetError(writerNameTextBox, "Writer's name is required!");
+
+        //    }
+        //    else
+        //    {
+        //        e.Cancel = false;
+        //        errorProvider2.SetError(writerNameTextBox, null);
+        //    }
+        //}
+
+        //private void writerLastnameTextBox_Validating(object sender, CancelEventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(writerLastnameTextBox.Text))
+        //    {
+        //        e.Cancel = true;
+        //        writerLastnameTextBox.Focus();
+        //        errorProvider3.SetError(writerLastnameTextBox, "Writer's last name is required!");
+
+        //    }
+        //    else
+        //    {
+        //        e.Cancel = false;
+        //        errorProvider3.SetError(writerLastnameTextBox, null);
+        //    }
+        //}
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            BookForm bookForm = new BookForm();
+            bookForm.client = client;
+            bookForm.ShowDialog();
+
+        }
+
+        private void addWriterFormButton_Click(object sender, EventArgs e)
+        {
+            AddWriterForm addWriterForm = new AddWriterForm();
+            addWriterForm.client = client;
+            addWriterForm.ShowDialog();
+        }
+
+        private void addButton_Click_1(object sender, EventArgs e)
+        {
+            if (writersComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("Morate odabrati pisca!");
+                return;
+            }
             var bookAndWriter = CreateBookAndWriter();
 
             String BookName = ".*" + bookAndWriter.Item3.Book.Name + ".*";
             Dictionary<string, object> bookDict = new Dictionary<string, object>();
-         
+
 
             var queryBook = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Book {Name:'" + bookAndWriter.Item1.Name
                                                            + "', Genre:'" + bookAndWriter.Item1.Genre + "', Publisher:'" + bookAndWriter.Item1.Publisher
                                                            + "', YearOfPublish:'" + bookAndWriter.Item1.YearOfPublish
                                                            + "', Summary:'" + bookAndWriter.Item1.Summary
-                                                           +"', NumberOfPages:'" + bookAndWriter.Item1.NumberOfPages
+                                                           + "', NumberOfPages:'" + bookAndWriter.Item1.NumberOfPages
                                                            + "'}) return n",
                                                            bookDict, CypherResultMode.Set);
             List<Book> books = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(queryBook).ToList();
-
-            String WriterName = bookAndWriter.Item2.Name;
+           
             Dictionary<string, object> writerDict = new Dictionary<string, object>();
-          
+            writerDict.Add("Name", bookAndWriter.Item2.Name);
+            writerDict.Add("Lastname", bookAndWriter.Item2.Lastname);
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (w:Writer) where w.Name =~ {Name} and " +
+                                                             " w.Lastname =~ {Lastname} return distinct w",
+                                                       writerDict, CypherResultMode.Set);
 
-            var queryWriter = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Writer {Name:'" + bookAndWriter.Item2.Name
-                                                          + "', Lastname:'" + bookAndWriter.Item2.Lastname 
-                                                          + "', Birthday:'" + bookAndWriter.Item2.Birthday
-                                                          + "', Biography:'" + bookAndWriter.Item2.Biography                                             
-                                                          + "'}) return n",
-                                                          writerDict, CypherResultMode.Set);
-            List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(queryWriter).ToList();
+            List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query).ToList();
 
-
-            
-            String InterestingFacts = bookAndWriter.Item3.InterestingFacts;
             Dictionary<string, object> bookWriterDict = new Dictionary<string, object>();
-            bookWriterDict.Add("InterestingFacts", bookAndWriter.Item3.InterestingFacts);
+            //todo sta bese interesting facts?
+            // bookWriterDict.Add("InterestingFacts", bookAndWriter.Item3.InterestingFacts);
             bookWriterDict.Add("BookName", BookName);
-            bookWriterDict.Add("WriterName", bookAndWriter.Item3.Writer.Name);
+            bookWriterDict.Add("WriterName", writers.ElementAt(0).Name);
+            bookWriterDict.Add("WriterLastname", writers.ElementAt(0).Lastname);
+            //todo interesting facts i additional information treba da postoje za vezu izmedju pisca i knjige
+            //vidi na koji ces nacin to da postignes!
 
 
 
             var queryBookWriter = new Neo4jClient.Cypher.CypherQuery("MATCH (b:Book), (w:Writer) WHERE b.Name =~ {BookName} " +
                                                                      "AND w.Name =~ {WriterName} " +
-                                                                     "CREATE (w)-[r:WROTE {InterestingFacts:{InterestingFacts}}]->(b)" +
+                                                                     "CREATE (w)-[r:WROTE]->(b)" +
                                                                      "RETURN r{Book:b, Writer:w}",
                                              bookWriterDict, CypherResultMode.Set);
             List<BookWriter> bookWriters = ((IRawGraphClient)client).ExecuteGetCypherResults<BookWriter>(queryBookWriter).ToList();
@@ -137,61 +221,6 @@ namespace BookClub
             List<BookUser> bookUser = ((IRawGraphClient)client).ExecuteGetCypherResults<BookUser>(queryBookUser).ToList();
 
 
-        }
-
-        private void bookNameTextBox_Validating(object sender, CancelEventArgs e)
-        {
-            if(string.IsNullOrEmpty(bookNameTextBox.Text))
-            {
-                e.Cancel = true;
-                bookNameTextBox.Focus();
-                errorProvider1.SetError(bookNameTextBox, "Book name is required!");
-
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider1.SetError(bookNameTextBox, null);
-            }
-        }
-
-        private void writerNameTextBox_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(writerNameTextBox.Text))
-            {
-                e.Cancel = true;
-                writerNameTextBox.Focus();
-                errorProvider2.SetError(writerNameTextBox, "Writer's name is required!");
-
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider2.SetError(writerNameTextBox, null);
-            }
-        }
-
-        private void writerLastnameTextBox_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(writerLastnameTextBox.Text))
-            {
-                e.Cancel = true;
-                writerLastnameTextBox.Focus();
-                errorProvider3.SetError(writerLastnameTextBox, "Writer's last name is required!");
-
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider3.SetError(writerLastnameTextBox, null);
-            }
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            BookForm bookForm = new BookForm();
-            bookForm.client = client;
-            bookForm.ShowDialog();
 
         }
     }

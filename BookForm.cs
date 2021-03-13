@@ -44,12 +44,29 @@ namespace BookClub
 
         private void BookForm_Load(object sender, EventArgs e)
         {
+           
 
         }
 
         private void bookBookmarksButton_Click(object sender, EventArgs e)
         {
-            String activeUser = Global.ActiveUser.Username;
+            String activeUser = ".*" + Global.ActiveUser.Username + ".*";
+
+            Dictionary<string, object> myBooksDict = new Dictionary<string, object>();
+            myBooksDict.Add("ActiveUser", activeUser);
+
+            //todo : smisli query : preko grane ili preko propertija? Mozda je bolje opreko grane?
+            var query = new Neo4jClient.Cypher.CypherQuery(" match (w)-[r1:WROTE]->(b)-[r:IS_BOOKMARKED_BY]->(u) where u.Username =~ {ActiveUser} and r.Bookmarked=true return r1{Book:b, Writer:w}",
+                                                         myBooksDict, CypherResultMode.Set);
+            List<BookWriter> uploadedBooks = ((IRawGraphClient)client).ExecuteGetCypherResults<BookWriter>(query).ToList();
+
+            for (int i = 0; i < uploadedBooks.Count; i++)
+            {
+                Books.Items.Add(uploadedBooks.ElementAt(i).Book.Name);
+                Writers.Items.Add(uploadedBooks.ElementAt(i).Writer.Name + " " + uploadedBooks.ElementAt(i).Writer.Lastname);
+
+            }
+
 
         }
 
@@ -58,6 +75,11 @@ namespace BookClub
             AddBookForm addBookForm = new AddBookForm();
             addBookForm.client = client;
             addBookForm.ShowDialog();
+        }
+
+        private void Books_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedBook = Books.SelectedItem;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace BookClub.Domain_models
         public Book Book { get; set; }
         public User User { get; set; }
        // public User UploadedByUser { get; set; }
-
+        public User ActiveUser { get; set; }
         public String Bookmarked { get; set; }
 
     }

@@ -56,6 +56,7 @@ namespace BookClub
 
         private void Reviews_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Comments.Items.Clear();
             Dictionary<string, object> reviewDict = new Dictionary<string, object>();
             //Proveriti da li je pametno pretrazivati po tekstu recenzije ili dodati ID!
             reviewDict.Add("Review", Reviews.SelectedItem.ToString());
@@ -86,6 +87,48 @@ namespace BookClub
 
             List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
             Comments.Items.Add(commentTextBox.Text);
+        }
+
+        private void likeBtn_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, object> queryLikeDict = new Dictionary<string, object>();
+            queryLikeDict.Add("Username", Global.ActiveUser.Username);
+            queryLikeDict.Add("Text", Reviews.SelectedItem.ToString());
+            String review = Reviews.SelectedItem.ToString();
+            var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:User),(b:Review)" +
+                                                            "WHERE a.Username =~ {Username} AND b.Text =~ {Text} " +
+                                                            "CREATE(a) -[r:LIKED]->(b)" +
+                                                             "RETURN r{User:a, Review:b}",
+                                                           queryLikeDict, CypherResultMode.Set);
+
+            List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
+            if (!Likes.Items.Contains(review))
+            {
+                Likes.Items.Add(review);
+            }
+        }
+        
+        private void dislikeBtn_Click(object sender, EventArgs e)
+        {
+            if (Likes.SelectedIndex < 0)
+            {
+                MessageBox.Show("You must choose a review you want to dislike!");
+                return;
+            }
+            int reviewIndex = Likes.SelectedIndex;
+            String username = Global.ActiveUser.Username;
+            String review = Likes.SelectedItem.ToString();
+
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+
+            int itemIndex = Reviews.SelectedIndex;
+
+            var query = new Neo4jClient.Cypher.CypherQuery("MATCH (User {Username: '"+ username +"'})-[r:LIKED]->(Review {Text:'"+ review +"'})" +
+                                                           "DELETE r",
+                                                            queryDict, CypherResultMode.Projection);
+
+            List<Review> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+            Likes.Items.RemoveAt(reviewIndex);
         }
     }
 }

@@ -38,11 +38,15 @@ namespace BookClub
             this.commentTextBox = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.likeBtn = new System.Windows.Forms.Button();
+            this.dislikeBtn = new System.Windows.Forms.Button();
+            this.Likes = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // findReviewBtn
             // 
-            this.findReviewBtn.Location = new System.Drawing.Point(49, 215);
+            this.findReviewBtn.Location = new System.Drawing.Point(255, 53);
             this.findReviewBtn.Name = "findReviewBtn";
             this.findReviewBtn.Size = new System.Drawing.Size(111, 60);
             this.findReviewBtn.TabIndex = 0;
@@ -62,9 +66,9 @@ namespace BookClub
             // 
             this.Reviews.FormattingEnabled = true;
             this.Reviews.ItemHeight = 20;
-            this.Reviews.Location = new System.Drawing.Point(272, 32);
+            this.Reviews.Location = new System.Drawing.Point(426, 36);
             this.Reviews.Name = "Reviews";
-            this.Reviews.Size = new System.Drawing.Size(587, 164);
+            this.Reviews.Size = new System.Drawing.Size(535, 164);
             this.Reviews.TabIndex = 2;
             this.Reviews.SelectedIndexChanged += new System.EventHandler(this.Reviews_SelectedIndexChanged);
             // 
@@ -72,16 +76,16 @@ namespace BookClub
             // 
             this.Comments.FormattingEnabled = true;
             this.Comments.ItemHeight = 20;
-            this.Comments.Location = new System.Drawing.Point(272, 226);
+            this.Comments.Location = new System.Drawing.Point(426, 226);
             this.Comments.Name = "Comments";
-            this.Comments.Size = new System.Drawing.Size(587, 164);
+            this.Comments.Size = new System.Drawing.Size(535, 164);
             this.Comments.TabIndex = 3;
             // 
             // addReviewCommentBtn
             // 
-            this.addReviewCommentBtn.Location = new System.Drawing.Point(49, 441);
+            this.addReviewCommentBtn.Location = new System.Drawing.Point(426, 442);
             this.addReviewCommentBtn.Name = "addReviewCommentBtn";
-            this.addReviewCommentBtn.Size = new System.Drawing.Size(111, 61);
+            this.addReviewCommentBtn.Size = new System.Drawing.Size(93, 61);
             this.addReviewCommentBtn.TabIndex = 4;
             this.addReviewCommentBtn.Text = "Add a comment";
             this.addReviewCommentBtn.UseVisualStyleBackColor = true;
@@ -90,7 +94,7 @@ namespace BookClub
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 45);
+            this.label1.Location = new System.Drawing.Point(29, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 20);
             this.label1.TabIndex = 5;
@@ -98,16 +102,16 @@ namespace BookClub
             // 
             // commentTextBox
             // 
-            this.commentTextBox.Location = new System.Drawing.Point(272, 411);
+            this.commentTextBox.Location = new System.Drawing.Point(525, 411);
             this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(587, 120);
+            this.commentTextBox.Size = new System.Drawing.Size(436, 120);
             this.commentTextBox.TabIndex = 6;
             this.commentTextBox.Text = "";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(272, 9);
+            this.label2.Location = new System.Drawing.Point(426, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(208, 20);
             this.label2.TabIndex = 7;
@@ -116,17 +120,59 @@ namespace BookClub
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(272, 203);
+            this.label3.Location = new System.Drawing.Point(426, 203);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(235, 20);
             this.label3.TabIndex = 8;
             this.label3.Text = "Comments for a review you chose:";
             // 
+            // likeBtn
+            // 
+            this.likeBtn.Location = new System.Drawing.Point(29, 164);
+            this.likeBtn.Name = "likeBtn";
+            this.likeBtn.Size = new System.Drawing.Size(165, 29);
+            this.likeBtn.TabIndex = 9;
+            this.likeBtn.Text = "Like review";
+            this.likeBtn.UseVisualStyleBackColor = true;
+            this.likeBtn.Click += new System.EventHandler(this.likeBtn_Click);
+            // 
+            // dislikeBtn
+            // 
+            this.dislikeBtn.Location = new System.Drawing.Point(29, 502);
+            this.dislikeBtn.Name = "dislikeBtn";
+            this.dislikeBtn.Size = new System.Drawing.Size(165, 29);
+            this.dislikeBtn.TabIndex = 10;
+            this.dislikeBtn.Text = "Dislike review";
+            this.dislikeBtn.UseVisualStyleBackColor = true;
+            this.dislikeBtn.Click += new System.EventHandler(this.dislikeBtn_Click);
+            // 
+            // Likes
+            // 
+            this.Likes.FormattingEnabled = true;
+            this.Likes.ItemHeight = 20;
+            this.Likes.Location = new System.Drawing.Point(29, 225);
+            this.Likes.Name = "Likes";
+            this.Likes.Size = new System.Drawing.Size(209, 264);
+            this.Likes.TabIndex = 11;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(29, 200);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(129, 20);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Reviews you liked:";
+            // 
             // OtherReviewsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(891, 556);
+            this.ClientSize = new System.Drawing.Size(1014, 559);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Likes);
+            this.Controls.Add(this.dislikeBtn);
+            this.Controls.Add(this.likeBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.commentTextBox);
@@ -155,5 +201,9 @@ namespace BookClub
         private System.Windows.Forms.RichTextBox commentTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button likeBtn;
+        private System.Windows.Forms.Button dislikeBtn;
+        private System.Windows.Forms.ListBox Likes;
+        private System.Windows.Forms.Label label4;
     }
 }

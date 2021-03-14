@@ -31,7 +31,7 @@ namespace BookClub
             Dictionary<string, object> myQuotesDict = new Dictionary<string, object>();
             myQuotesDict.Add("ActiveUser", activeUser);
 
-            var query = new Neo4jClient.Cypher.CypherQuery("match (b)-[r1:UPPLOADED]->(a)-[r:IS_FROM]->(u) where u.Username =~ {ActiveUser} return r1{Review:a, Book:u}",
+            var query = new Neo4jClient.Cypher.CypherQuery("match (b)-[r1:UPPLOADED]->(a)-[r:IS_FROM]->(u) where b.Username =~ {ActiveUser} return r{Review:a, Book:u}",
                                                          myQuotesDict, CypherResultMode.Set);
             List<BookReview> uploadedQuotes = ((IRawGraphClient)client).ExecuteGetCypherResults<BookReview>(query).ToList();
 

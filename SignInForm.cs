@@ -47,12 +47,17 @@ namespace BookClub
             {
                 Help.Global.ActiveUser = users.ElementAt(0);
                 MessageBox.Show("Uspesno ste se prijavili!");
-                QuoteForm quoteForm = new QuoteForm();
-                quoteForm.client = client;
-                quoteForm.ShowDialog();
-                /*BookForm bookForm = new BookForm();
+                //QuoteForm quoteForm = new QuoteForm();
+                //quoteForm.client = client;
+                //quoteForm.ShowDialog();
+
+                BookForm bookForm = new BookForm();
                 bookForm.client = client;
-                bookForm.ShowDialog();*/
+                bookForm.ShowDialog();
+
+                //MainUserForm mainuserForm = new MainUserForm();
+                //mainuserForm.client = client;
+                //mainuserForm.ShowDialog();
             }
 
         }

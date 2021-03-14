@@ -13,7 +13,9 @@ namespace BookClub
 
         private void reviewButton_Click(object sender, System.EventArgs e)
         {
-            
+            ReviewForm reviewForm = new ReviewForm();
+            reviewForm.client = client;
+            reviewForm.ShowDialog();
         }
 
         private void booksButton_Click(object sender, System.EventArgs e)

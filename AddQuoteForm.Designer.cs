@@ -32,7 +32,6 @@ namespace BookClub
             this.addQuoteButton = new System.Windows.Forms.Button();
             this.quoteTextBox = new System.Windows.Forms.RichTextBox();
             this.quoteComboBox = new System.Windows.Forms.ComboBox();
-            this.showAllBooksBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // addQuoteButton
@@ -63,22 +62,11 @@ namespace BookClub
             this.quoteComboBox.TabIndex = 2;
             this.quoteComboBox.SelectedIndexChanged += new System.EventHandler(this.quoteComboBox_SelectedIndexChanged);
             // 
-            // showAllBooksBtn
-            // 
-            this.showAllBooksBtn.Location = new System.Drawing.Point(82, 59);
-            this.showAllBooksBtn.Name = "showAllBooksBtn";
-            this.showAllBooksBtn.Size = new System.Drawing.Size(147, 29);
-            this.showAllBooksBtn.TabIndex = 3;
-            this.showAllBooksBtn.Text = "Prikazi sve knjige:";
-            this.showAllBooksBtn.UseVisualStyleBackColor = true;
-            this.showAllBooksBtn.Click += new System.EventHandler(this.showAllBooksBtn_Click);
-            // 
             // AddQuoteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.showAllBooksBtn);
             this.Controls.Add(this.quoteComboBox);
             this.Controls.Add(this.quoteTextBox);
             this.Controls.Add(this.addQuoteButton);
@@ -93,6 +81,5 @@ namespace BookClub
         private System.Windows.Forms.Button addQuoteButton;
         private System.Windows.Forms.RichTextBox quoteTextBox;
         private System.Windows.Forms.ComboBox quoteComboBox;
-        private System.Windows.Forms.Button showAllBooksBtn;
     }
 }

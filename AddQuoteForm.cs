@@ -17,9 +17,21 @@ namespace BookClub
             InitializeComponent();
         }
 
+        private void AddQuoteForm_Load(object sender, EventArgs e)
+        {
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (b:Book) return distinct b",
+                                                         new Dictionary<string, object>(), CypherResultMode.Set);
+
+            List<Book> books = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).ToList();
+
+            foreach (Book b in books)
+            {
+                quoteComboBox.Items.Add(b.Name);
+            }
+        }
         private void quoteComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+            
         }
 
         private Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter> createQuote()
@@ -32,19 +44,18 @@ namespace BookClub
             QuoteBook qb = new QuoteBook();
             qb.Quote = quote;
 
-                var bookTitle = quoteComboBox.Text;
-                Dictionary<string, object> queryDict = new Dictionary<string, object>();
-                queryDict.Add("Name", bookTitle);
-                
-                var query = new Neo4jClient.Cypher.CypherQuery("MATCH(n: Book) WHERE n.Name = '" + bookTitle + "' RETURN n",
-                                                                queryDict, CypherResultMode.Set);
-                Book book1 = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).FirstOrDefault();
-                qb.Book = book1;
+            var bookTitle = quoteComboBox.Text;
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+
+            var query = new Neo4jClient.Cypher.CypherQuery("MATCH(n: Book) WHERE n.Name = '" + bookTitle + "' RETURN n",
+                                                            queryDict, CypherResultMode.Set);
+            Book book1 = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).FirstOrDefault();
+            qb.Book = book1;
             QuoteWriter quoteWriter = new QuoteWriter();
 
             quoteWriter.Quote = quote;
-                var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (Book {Name: '" + bookTitle + "'})--(writer) RETURN writer",
-                                                                queryDict, CypherResultMode.Set);
+            var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (Book {Name: '" + bookTitle + "'})--(writer) RETURN writer",
+                                                            queryDict, CypherResultMode.Set);
             Writer w = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query2).FirstOrDefault();
             quoteWriter.Writer = w;
 
@@ -58,27 +69,17 @@ namespace BookClub
             return new Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter>(quote, qb, qu, quoteWriter);
         }
 
-        private void showAllBooksBtn_Click(object sender, EventArgs e)
-        {
-                var query = new Neo4jClient.Cypher.CypherQuery("MATCH (n:Book)" +
-                                                               "RETURN n",
-                                                             new Dictionary<string, object>(), CypherResultMode.Set);
-                List<Book> uploadedBooks = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).ToList();
-
-
-                foreach (Book b in uploadedBooks)
-                {
-                    quoteComboBox.Items.Add(b.Name);
-                }
-        }
-
         private void addQuoteButton_Click(object sender, EventArgs e)
         {
+            if (quoteComboBox.SelectedIndex < 0)
+            {
+                MessageBox.Show("You must choose a book you want to add quote for!") ;
+                return;
+            }
+
             Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter> quote = this.createQuote();
 
             Dictionary<string, object> queryBookDict = new Dictionary<string, object>();
-            queryBookDict.Add("Text", quote.Item1.Text);
-            queryBookDict.Add("UploadedBy", quote.Item1.UploadedBy);
 
             var query = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Quote {Text:'" + quote.Item1.Text + "', UploadedBy:'" + quote.Item1.UploadedBy
                                                             + "'}) return n",
@@ -88,9 +89,8 @@ namespace BookClub
 
             foreach (Quote q in quotes)
             {
-                MessageBox.Show("Uspesno dodat citat.");
+                MessageBox.Show("Successfully added quote!");
             }
-
 
             Dictionary<string, object> queryQuoteBookDict = new Dictionary<string, object>();
             queryQuoteBookDict.Add("Text", quote.Item2.Quote.Text);
@@ -140,22 +140,20 @@ namespace BookClub
             this.Close();
         }
 
-        
-        /*private void quoteComboBox_Validating(object sender, CancelEventArgs e)
+        private void quoteTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(quoteComboBox.Text))
+            /*if (string.IsNullOrEmpty(quoteTextBox.Text))
             {
                 e.Cancel = true;
-                quoteComboBox.Focus();
-                errorProvider1.SetError(quoteComboBox, "Choose a book you want to add quote for!");
+                quoteTextBox.Focus();
+                errorProvider1.SetError(quoteTextBox, "Book name is required!");
 
             }
             else
             {
                 e.Cancel = false;
-                errorProvider1.SetError(quoteComboBox, null);
-            }
-        }*/
-
+                errorProvider1.SetError(quoteTextBox, null);
+            }*/
+        }
     }
 }

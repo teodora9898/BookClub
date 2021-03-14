@@ -32,13 +32,19 @@ namespace BookClub
             this.findReviewBtn = new System.Windows.Forms.Button();
             this.findOtherReviewComboBox = new System.Windows.Forms.ComboBox();
             this.Reviews = new System.Windows.Forms.ListBox();
+            this.Comments = new System.Windows.Forms.ListBox();
+            this.addReviewCommentBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.commentTextBox = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // findReviewBtn
             // 
-            this.findReviewBtn.Location = new System.Drawing.Point(34, 33);
+            this.findReviewBtn.Location = new System.Drawing.Point(49, 215);
             this.findReviewBtn.Name = "findReviewBtn";
-            this.findReviewBtn.Size = new System.Drawing.Size(111, 49);
+            this.findReviewBtn.Size = new System.Drawing.Size(111, 60);
             this.findReviewBtn.TabIndex = 0;
             this.findReviewBtn.Text = "Find review";
             this.findReviewBtn.UseVisualStyleBackColor = true;
@@ -47,25 +53,86 @@ namespace BookClub
             // findOtherReviewComboBox
             // 
             this.findOtherReviewComboBox.FormattingEnabled = true;
-            this.findOtherReviewComboBox.Location = new System.Drawing.Point(219, 33);
+            this.findOtherReviewComboBox.Location = new System.Drawing.Point(29, 85);
             this.findOtherReviewComboBox.Name = "findOtherReviewComboBox";
-            this.findOtherReviewComboBox.Size = new System.Drawing.Size(177, 28);
+            this.findOtherReviewComboBox.Size = new System.Drawing.Size(165, 28);
             this.findOtherReviewComboBox.TabIndex = 1;
             // 
             // Reviews
             // 
             this.Reviews.FormattingEnabled = true;
             this.Reviews.ItemHeight = 20;
-            this.Reviews.Location = new System.Drawing.Point(219, 89);
+            this.Reviews.Location = new System.Drawing.Point(272, 32);
             this.Reviews.Name = "Reviews";
-            this.Reviews.Size = new System.Drawing.Size(523, 304);
+            this.Reviews.Size = new System.Drawing.Size(587, 164);
             this.Reviews.TabIndex = 2;
+            this.Reviews.SelectedIndexChanged += new System.EventHandler(this.Reviews_SelectedIndexChanged);
+            // 
+            // Comments
+            // 
+            this.Comments.FormattingEnabled = true;
+            this.Comments.ItemHeight = 20;
+            this.Comments.Location = new System.Drawing.Point(272, 226);
+            this.Comments.Name = "Comments";
+            this.Comments.Size = new System.Drawing.Size(587, 164);
+            this.Comments.TabIndex = 3;
+            // 
+            // addReviewCommentBtn
+            // 
+            this.addReviewCommentBtn.Location = new System.Drawing.Point(49, 441);
+            this.addReviewCommentBtn.Name = "addReviewCommentBtn";
+            this.addReviewCommentBtn.Size = new System.Drawing.Size(111, 61);
+            this.addReviewCommentBtn.TabIndex = 4;
+            this.addReviewCommentBtn.Text = "Add a comment";
+            this.addReviewCommentBtn.UseVisualStyleBackColor = true;
+            this.addReviewCommentBtn.Click += new System.EventHandler(this.addReviewCommentBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(111, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Choose a book:";
+            // 
+            // commentTextBox
+            // 
+            this.commentTextBox.Location = new System.Drawing.Point(272, 411);
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(587, 120);
+            this.commentTextBox.TabIndex = 6;
+            this.commentTextBox.Text = "";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(272, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(208, 20);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Reviews for a book you chose:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(272, 203);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(235, 20);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Comments for a review you chose:";
             // 
             // OtherReviewsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(891, 556);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.commentTextBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.addReviewCommentBtn);
+            this.Controls.Add(this.Comments);
             this.Controls.Add(this.Reviews);
             this.Controls.Add(this.findOtherReviewComboBox);
             this.Controls.Add(this.findReviewBtn);
@@ -73,6 +140,7 @@ namespace BookClub
             this.Text = "OtherReviewsForm";
             this.Load += new System.EventHandler(this.OtherReviewsForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -81,5 +149,11 @@ namespace BookClub
         private System.Windows.Forms.Button findReviewBtn;
         private System.Windows.Forms.ComboBox findOtherReviewComboBox;
         private System.Windows.Forms.ListBox Reviews;
+        private System.Windows.Forms.ListBox Comments;
+        private System.Windows.Forms.Button addReviewCommentBtn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox commentTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

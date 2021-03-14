@@ -34,6 +34,9 @@ namespace BookClub
             this.Reviews = new System.Windows.Forms.ListBox();
             this.Books = new System.Windows.Forms.ListBox();
             this.findReviewsBtn = new System.Windows.Forms.Button();
+            this.deleteReviewBtn = new System.Windows.Forms.Button();
+            this.updateTextBox = new System.Windows.Forms.RichTextBox();
+            this.updateReviewBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // myReviewsButton
@@ -48,7 +51,7 @@ namespace BookClub
             // 
             // addReviewButton
             // 
-            this.addReviewButton.Location = new System.Drawing.Point(66, 130);
+            this.addReviewButton.Location = new System.Drawing.Point(66, 124);
             this.addReviewButton.Name = "addReviewButton";
             this.addReviewButton.Size = new System.Drawing.Size(145, 65);
             this.addReviewButton.TabIndex = 1;
@@ -71,12 +74,12 @@ namespace BookClub
             this.Books.ItemHeight = 20;
             this.Books.Location = new System.Drawing.Point(545, 41);
             this.Books.Name = "Books";
-            this.Books.Size = new System.Drawing.Size(182, 64);
+            this.Books.Size = new System.Drawing.Size(182, 184);
             this.Books.TabIndex = 3;
             // 
             // findReviewsBtn
             // 
-            this.findReviewsBtn.Location = new System.Drawing.Point(66, 224);
+            this.findReviewsBtn.Location = new System.Drawing.Point(66, 205);
             this.findReviewsBtn.Name = "findReviewsBtn";
             this.findReviewsBtn.Size = new System.Drawing.Size(145, 65);
             this.findReviewsBtn.TabIndex = 4;
@@ -84,11 +87,42 @@ namespace BookClub
             this.findReviewsBtn.UseVisualStyleBackColor = true;
             this.findReviewsBtn.Click += new System.EventHandler(this.findReviewsBtn_Click);
             // 
+            // deleteReviewBtn
+            // 
+            this.deleteReviewBtn.Location = new System.Drawing.Point(66, 287);
+            this.deleteReviewBtn.Name = "deleteReviewBtn";
+            this.deleteReviewBtn.Size = new System.Drawing.Size(145, 58);
+            this.deleteReviewBtn.TabIndex = 5;
+            this.deleteReviewBtn.Text = "Delete review";
+            this.deleteReviewBtn.UseVisualStyleBackColor = true;
+            this.deleteReviewBtn.Click += new System.EventHandler(this.deleteReviewBtn_Click);
+            // 
+            // updateTextBox
+            // 
+            this.updateTextBox.Location = new System.Drawing.Point(545, 245);
+            this.updateTextBox.Name = "updateTextBox";
+            this.updateTextBox.Size = new System.Drawing.Size(182, 144);
+            this.updateTextBox.TabIndex = 6;
+            this.updateTextBox.Text = "";
+            // 
+            // updateReviewBtn
+            // 
+            this.updateReviewBtn.Location = new System.Drawing.Point(575, 395);
+            this.updateReviewBtn.Name = "updateReviewBtn";
+            this.updateReviewBtn.Size = new System.Drawing.Size(126, 43);
+            this.updateReviewBtn.TabIndex = 7;
+            this.updateReviewBtn.Text = "Update review";
+            this.updateReviewBtn.UseVisualStyleBackColor = true;
+            this.updateReviewBtn.Click += new System.EventHandler(this.updateReviewBtn_Click);
+            // 
             // ReviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.updateReviewBtn);
+            this.Controls.Add(this.updateTextBox);
+            this.Controls.Add(this.deleteReviewBtn);
             this.Controls.Add(this.findReviewsBtn);
             this.Controls.Add(this.Books);
             this.Controls.Add(this.Reviews);
@@ -107,5 +141,8 @@ namespace BookClub
         private System.Windows.Forms.ListBox Reviews;
         private System.Windows.Forms.ListBox Books;
         private System.Windows.Forms.Button findReviewsBtn;
+        private System.Windows.Forms.Button deleteReviewBtn;
+        private System.Windows.Forms.RichTextBox updateTextBox;
+        private System.Windows.Forms.Button updateReviewBtn;
     }
 }

@@ -37,8 +37,11 @@ namespace BookClub
 
             for (int i = 0; i < uploadedQuotes.Count; i++)
             {
-                Reviews.Items.Add(uploadedQuotes.ElementAt(i).Review.Text);
-                Books.Items.Add(uploadedQuotes.ElementAt(i).Book.Name);
+                if (!(Reviews.Items.Contains(uploadedQuotes.ElementAt(i).Review.Text) && Books.Items.Contains(uploadedQuotes.ElementAt(i).Book.Name)))
+                {
+                    Reviews.Items.Add(uploadedQuotes.ElementAt(i).Review.Text);
+                    Books.Items.Add(uploadedQuotes.ElementAt(i).Book.Name);
+                }
             }
         }
 
@@ -47,6 +50,48 @@ namespace BookClub
             OtherReviewsForm otherReviewsForm = new OtherReviewsForm();
             otherReviewsForm.client = client;
             otherReviewsForm.ShowDialog();
+        }
+
+        private void deleteReviewBtn_Click(object sender, EventArgs e)
+        {
+            if (Reviews.SelectedIndex < 0)
+            {
+                MessageBox.Show("You must choose a review you want to delete!");
+                return;
+            }
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+            queryDict.Add("Text", Reviews.SelectedItem.ToString());
+            int itemIndex = Reviews.SelectedIndex;
+
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) where (n:Review) and exists(n.Text) and n.Text =~ {Text} detach delete n",
+                                                            queryDict, CypherResultMode.Projection);
+
+            List<Review> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+
+            MessageBox.Show("Review successfully deleted!");
+            Reviews.Items.RemoveAt(itemIndex);
+            Books.Items.RemoveAt(itemIndex);
+        }
+
+        private void updateReviewBtn_Click(object sender, EventArgs e)
+        {
+            if (Reviews.SelectedIndex < 0)
+            {
+                MessageBox.Show("You must choose a review you want to update!");
+                return;
+            }
+            int itemIndex = Reviews.SelectedIndex;
+            String ReviewText = Reviews.SelectedItem.ToString();
+            String Update = updateTextBox.Text;
+            
+            var query = new Neo4jClient.Cypher.CypherQuery("Match(n) where (n:Review) and n.Text = '"+ ReviewText +"'  set n.Text = '"+ Update +"' return n",
+                                                            new Dictionary<string, object>(), CypherResultMode.Set);
+
+            List<Review> reviews = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+
+            MessageBox.Show("Review successfully updated!");
+            Reviews.Items.RemoveAt(itemIndex);
+            Reviews.Items.Insert(itemIndex, Update);
         }
     }
 }

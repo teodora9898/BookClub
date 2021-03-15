@@ -68,10 +68,13 @@ namespace BookClub
 
             for (int i = 0; i < bookmarkedBooks.Count; i++)
             {
-                Books.Items.Add(bookmarkedBooks.ElementAt(i).Book.Name);
-                Writers.Items.Add(bookmarkedBooks.ElementAt(i).Writer.Name + " " + bookmarkedBooks.ElementAt(i).Writer.Lastname);
-
+                if (!Books.Items.Contains(bookmarkedBooks.ElementAt(i).Book.Name))
+                {
+                    Books.Items.Add(bookmarkedBooks.ElementAt(i).Book.Name);
+                    Writers.Items.Add(bookmarkedBooks.ElementAt(i).Writer.Name + " " + bookmarkedBooks.ElementAt(i).Writer.Lastname);
+                }
             }
+           
 
 
         }
@@ -116,14 +119,25 @@ namespace BookClub
             queryDict.Add("bookName", bookName);
             queryDict.Add("activeUser", activeUser);
 
+            var queryIf = new Neo4jClient.Cypher.CypherQuery("MATCH (b:Book{Name:{bookName}})<-[r:BOOKMARK]-(u:User{Username:{activeUser}}) " +
+                                                                                 "RETURN r{Book:b, User:u}",
+                                                         queryDict, CypherResultMode.Set);
+            List<Book> bookIf = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(queryIf).ToList();
+            if (bookIf.Count != 0)
+            {
+                MessageBox.Show("This book is already bookmarked");
+            }
+            else
+            {
 
-            var queryBookmark = new Neo4jClient.Cypher.CypherQuery("MATCH (b:Book), (u:User) WHERE b.Name = {bookName} " +
-                                                                     "AND u.Username = {activeUser}"+
-                                                                     "CREATE (u)-[r:BOOKMARK]->(b)" +
-                                                                     "RETURN r{Book:b, User:u}",
-                                             queryDict, CypherResultMode.Set);
-            List<Book> book = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(queryBookmark).ToList();
 
+                var queryBookmark = new Neo4jClient.Cypher.CypherQuery("MATCH (b:Book), (u:User) WHERE b.Name = {bookName} " +
+                                                                         "AND u.Username = {activeUser}" +
+                                                                         "CREATE (u)-[r:BOOKMARK]->(b)" +
+                                                                         "RETURN r{Book:b, User:u}",
+                                                 queryDict, CypherResultMode.Set);
+                List<Book> book = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(queryBookmark).ToList();
+            }
 
 
         }
@@ -176,6 +190,13 @@ namespace BookClub
             Books.Items.RemoveAt(index);
             Writers.Items.RemoveAt(index);
 
+        }
+
+        private void BackToMainFormBookButton_Click(object sender, EventArgs e)
+        {
+            MainForm mainForm = new MainForm();
+            mainForm.client = client;
+            mainForm.ShowDialog();
         }
     }
 }

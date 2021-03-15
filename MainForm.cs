@@ -31,5 +31,12 @@ namespace BookClub
             quoteForm.client = client;
             quoteForm.ShowDialog();
         }
+
+        private void WritersButton_Click(object sender, System.EventArgs e)
+        {
+            WritersForm writersForm = new WritersForm();
+            writersForm.client = client;
+            writersForm.ShowDialog();
+        }
     }
 }

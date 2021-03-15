@@ -33,6 +33,15 @@
             this.Books = new System.Windows.Forms.ListBox();
             this.Writers = new System.Windows.Forms.ListBox();
             this.addBookButton = new System.Windows.Forms.Button();
+            this.SearchBookTextBox = new System.Windows.Forms.TextBox();
+            this.SearchBookButton = new System.Windows.Forms.Button();
+            this.SearchBookListBox = new System.Windows.Forms.ListBox();
+            this.BookmarkBookButton = new System.Windows.Forms.Button();
+            this.SearchBooksByWriterButton = new System.Windows.Forms.Button();
+            this.DeleteBookButton = new System.Windows.Forms.Button();
+            this.BackToMainFormBookButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // myBooksButton
@@ -43,7 +52,6 @@
             this.myBooksButton.TabIndex = 0;
             this.myBooksButton.Text = "My books";
             this.myBooksButton.UseVisualStyleBackColor = true;
-            //this.myBooksButton.Click += new System.EventHandler(this.myBooksButton_Click);
             this.myBooksButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.myBooksButton_MouseClick);
             // 
             // bookBookmarksButton
@@ -85,11 +93,104 @@
             this.addBookButton.UseVisualStyleBackColor = true;
             this.addBookButton.Click += new System.EventHandler(this.addBookButton_Click);
             // 
+            // SearchBookTextBox
+            // 
+            this.SearchBookTextBox.Location = new System.Drawing.Point(586, 399);
+            this.SearchBookTextBox.Name = "SearchBookTextBox";
+            this.SearchBookTextBox.Size = new System.Drawing.Size(162, 27);
+            this.SearchBookTextBox.TabIndex = 3;
+            // 
+            // SearchBookButton
+            // 
+            this.SearchBookButton.Location = new System.Drawing.Point(586, 449);
+            this.SearchBookButton.Name = "SearchBookButton";
+            this.SearchBookButton.Size = new System.Drawing.Size(110, 54);
+            this.SearchBookButton.TabIndex = 4;
+            this.SearchBookButton.Text = "Search book by name";
+            this.SearchBookButton.UseVisualStyleBackColor = true;
+            this.SearchBookButton.Click += new System.EventHandler(this.SearchBookButton_Click);
+            // 
+            // SearchBookListBox
+            // 
+            this.SearchBookListBox.FormattingEnabled = true;
+            this.SearchBookListBox.ItemHeight = 20;
+            this.SearchBookListBox.Location = new System.Drawing.Point(794, 399);
+            this.SearchBookListBox.Name = "SearchBookListBox";
+            this.SearchBookListBox.Size = new System.Drawing.Size(150, 104);
+            this.SearchBookListBox.TabIndex = 5;
+            // 
+            // BookmarkBookButton
+            // 
+            this.BookmarkBookButton.Location = new System.Drawing.Point(794, 519);
+            this.BookmarkBookButton.Name = "BookmarkBookButton";
+            this.BookmarkBookButton.Size = new System.Drawing.Size(94, 29);
+            this.BookmarkBookButton.TabIndex = 6;
+            this.BookmarkBookButton.Text = "Bookmark";
+            this.BookmarkBookButton.UseVisualStyleBackColor = true;
+            this.BookmarkBookButton.Click += new System.EventHandler(this.BookmarkBookButton_Click);
+            // 
+            // SearchBooksByWriterButton
+            // 
+            this.SearchBooksByWriterButton.Location = new System.Drawing.Point(586, 530);
+            this.SearchBooksByWriterButton.Name = "SearchBooksByWriterButton";
+            this.SearchBooksByWriterButton.Size = new System.Drawing.Size(110, 48);
+            this.SearchBooksByWriterButton.TabIndex = 7;
+            this.SearchBooksByWriterButton.Text = "Search books by writer";
+            this.SearchBooksByWriterButton.UseVisualStyleBackColor = true;
+            this.SearchBooksByWriterButton.Click += new System.EventHandler(this.SearchBooksByWriterButton_Click);
+            // 
+            // DeleteBookButton
+            // 
+            this.DeleteBookButton.Location = new System.Drawing.Point(423, 324);
+            this.DeleteBookButton.Name = "DeleteBookButton";
+            this.DeleteBookButton.Size = new System.Drawing.Size(94, 53);
+            this.DeleteBookButton.TabIndex = 8;
+            this.DeleteBookButton.Text = "Delete book";
+            this.DeleteBookButton.UseVisualStyleBackColor = true;
+            this.DeleteBookButton.Click += new System.EventHandler(this.DeleteBookButton_Click);
+            // 
+            // BackToMainFormBookButton
+            // 
+            this.BackToMainFormBookButton.Location = new System.Drawing.Point(40, 558);
+            this.BackToMainFormBookButton.Name = "BackToMainFormBookButton";
+            this.BackToMainFormBookButton.Size = new System.Drawing.Size(94, 29);
+            this.BackToMainFormBookButton.TabIndex = 9;
+            this.BackToMainFormBookButton.Text = "Back";
+            this.BackToMainFormBookButton.UseVisualStyleBackColor = true;
+            this.BackToMainFormBookButton.Click += new System.EventHandler(this.BackToMainFormBookButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(423, 281);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(259, 40);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Choose the book from the list above\r\nthen clik the button below to delete it";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(586, 356);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(171, 40);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Enter full or part of the\r\nname of the book/writer";
+            // 
             // BookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 599);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.BackToMainFormBookButton);
+            this.Controls.Add(this.DeleteBookButton);
+            this.Controls.Add(this.SearchBooksByWriterButton);
+            this.Controls.Add(this.BookmarkBookButton);
+            this.Controls.Add(this.SearchBookListBox);
+            this.Controls.Add(this.SearchBookButton);
+            this.Controls.Add(this.SearchBookTextBox);
             this.Controls.Add(this.addBookButton);
             this.Controls.Add(this.Writers);
             this.Controls.Add(this.Books);
@@ -99,6 +200,7 @@
             this.Text = "BookForm";
             this.Load += new System.EventHandler(this.BookForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -109,5 +211,14 @@
         private System.Windows.Forms.ListBox Books;
         private System.Windows.Forms.ListBox Writers;
         private System.Windows.Forms.Button addBookButton;
+        private System.Windows.Forms.TextBox SearchBookTextBox;
+        private System.Windows.Forms.Button SearchBookButton;
+        private System.Windows.Forms.ListBox SearchBookListBox;
+        private System.Windows.Forms.Button BookmarkBookButton;
+        private System.Windows.Forms.Button SearchBooksByWriterButton;
+        private System.Windows.Forms.Button DeleteBookButton;
+        private System.Windows.Forms.Button BackToMainFormBookButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

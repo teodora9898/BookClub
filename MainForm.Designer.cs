@@ -32,6 +32,7 @@ namespace BookClub
             this.reviewButton = new System.Windows.Forms.Button();
             this.booksButton = new System.Windows.Forms.Button();
             this.quotesButton = new System.Windows.Forms.Button();
+            this.WritersButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // reviewButton
@@ -64,11 +65,22 @@ namespace BookClub
             this.quotesButton.UseVisualStyleBackColor = true;
             this.quotesButton.Click += new System.EventHandler(this.quotesButton_Click);
             // 
+            // WritersButton
+            // 
+            this.WritersButton.Location = new System.Drawing.Point(107, 276);
+            this.WritersButton.Name = "WritersButton";
+            this.WritersButton.Size = new System.Drawing.Size(94, 29);
+            this.WritersButton.TabIndex = 4;
+            this.WritersButton.Text = "Writers";
+            this.WritersButton.UseVisualStyleBackColor = true;
+            this.WritersButton.Click += new System.EventHandler(this.WritersButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.WritersButton);
             this.Controls.Add(this.quotesButton);
             this.Controls.Add(this.booksButton);
             this.Controls.Add(this.reviewButton);
@@ -83,5 +95,6 @@ namespace BookClub
         private System.Windows.Forms.Button reviewButton;
         private System.Windows.Forms.Button booksButton;
         private System.Windows.Forms.Button quotesButton;
+        private System.Windows.Forms.Button WritersButton;
     }
 }

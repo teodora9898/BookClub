@@ -42,6 +42,7 @@ namespace BookClub
             this.dislikeBtn = new System.Windows.Forms.Button();
             this.Likes = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.usernameTextBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // findReviewBtn
@@ -78,7 +79,7 @@ namespace BookClub
             this.Comments.ItemHeight = 20;
             this.Comments.Location = new System.Drawing.Point(426, 226);
             this.Comments.Name = "Comments";
-            this.Comments.Size = new System.Drawing.Size(535, 164);
+            this.Comments.Size = new System.Drawing.Size(390, 164);
             this.Comments.TabIndex = 3;
             // 
             // addReviewCommentBtn
@@ -113,18 +114,18 @@ namespace BookClub
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(426, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(208, 20);
+            this.label2.Size = new System.Drawing.Size(188, 20);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Reviews for a book you chose:";
+            this.label2.Text = "Reviews for a chosen book:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(426, 203);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(235, 20);
+            this.label3.Size = new System.Drawing.Size(215, 20);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Comments for a review you chose:";
+            this.label3.Text = "Comments for a chosen review:";
             // 
             // likeBtn
             // 
@@ -164,11 +165,21 @@ namespace BookClub
             this.label4.TabIndex = 12;
             this.label4.Text = "Reviews you liked:";
             // 
+            // usernameTextBox
+            // 
+            this.usernameTextBox.FormattingEnabled = true;
+            this.usernameTextBox.ItemHeight = 20;
+            this.usernameTextBox.Location = new System.Drawing.Point(823, 226);
+            this.usernameTextBox.Name = "usernameTextBox";
+            this.usernameTextBox.Size = new System.Drawing.Size(138, 164);
+            this.usernameTextBox.TabIndex = 13;
+            // 
             // OtherReviewsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 559);
+            this.Controls.Add(this.usernameTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Likes);
             this.Controls.Add(this.dislikeBtn);
@@ -205,5 +216,6 @@ namespace BookClub
         private System.Windows.Forms.Button dislikeBtn;
         private System.Windows.Forms.ListBox Likes;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox usernameTextBox;
     }
 }

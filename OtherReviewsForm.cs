@@ -28,6 +28,17 @@ namespace BookClub
             {
                 findOtherReviewComboBox.Items.Add(b.Name);
             }
+            Dictionary<string, object> queryLikeDict = new Dictionary<string, object>();
+
+            queryLikeDict.Add("Username", Global.ActiveUser.Username);
+            var query3 = new Neo4jClient.Cypher.CypherQuery("match (u)-[r:LIKED]->(a) where u.Username =~ {Username} return a",
+                                                           queryLikeDict, CypherResultMode.Set);
+
+            List<Review> likedReviews = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query3).ToList();
+            for (int i = 0; i < likedReviews.Count; i++)
+            {
+                    Likes.Items.Add(likedReviews.ElementAt(i).Text);
+            }
         }
 
         private void findReviewBtn_Click(object sender, EventArgs e)
@@ -66,9 +77,15 @@ namespace BookClub
                                                          reviewDict, CypherResultMode.Set);
             List<String> uploadedReviews = ((IRawGraphClient)client).ExecuteGetCypherResults<String>(query).ToList();
 
+            //todo Andjelka Probaj da strpas sve u jedan query!!!!
+            var query2 = new Neo4jClient.Cypher.CypherQuery("match (a)-[r:COMMENTED]->(u) where u.Text =~ {Review} return u",
+                                                         reviewDict, CypherResultMode.Set);
+            List<User> user = ((IRawGraphClient)client).ExecuteGetCypherResults<User>(query2).ToList();
+
             for (int i = 0; i < uploadedReviews.Count; i++)
             {
                 Comments.Items.Add(uploadedReviews.ElementAt(i));
+                //usernameTextBox.Items.Add(user.ElementAt(i).Username);
             }
         }
 
@@ -85,7 +102,7 @@ namespace BookClub
                                                              "RETURN r{User:a, Review:b}",
                                                            queryCommentReviewDict, CypherResultMode.Set);
 
-            List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
+            List<UserReviewLikes> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query3).ToList();
             Comments.Items.Add(commentTextBox.Text);
         }
 
@@ -101,7 +118,7 @@ namespace BookClub
                                                              "RETURN r{User:a, Review:b}",
                                                            queryLikeDict, CypherResultMode.Set);
 
-            List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
+            List<UserReviewLikes> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query3).ToList();
             if (!Likes.Items.Contains(review))
             {
                 Likes.Items.Add(review);
@@ -127,7 +144,7 @@ namespace BookClub
                                                            "DELETE r",
                                                             queryDict, CypherResultMode.Projection);
 
-            List<Review> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+            List<UserReviewLikes> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query).ToList();
             Likes.Items.RemoveAt(reviewIndex);
         }
     }

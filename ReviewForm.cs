@@ -26,6 +26,7 @@ namespace BookClub
 
         private void myReviewsButton_Click(object sender, EventArgs e)
         {
+            num.Items.Clear();
             String activeUser = Global.ActiveUser.Username;
 
             Dictionary<string, object> myQuotesDict = new Dictionary<string, object>();
@@ -92,6 +93,33 @@ namespace BookClub
             MessageBox.Show("Review successfully updated!");
             Reviews.Items.RemoveAt(itemIndex);
             Reviews.Items.Insert(itemIndex, Update);
+        }
+
+        private void ReviewForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Reviews_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            num.Items.Clear();
+            whoLikedListBox.Items.Clear();
+            String activeUser = Global.ActiveUser.Username;
+            String review = Reviews.SelectedItem.ToString();
+
+            Dictionary<string, object> myReviewDict = new Dictionary<string, object>();
+            myReviewDict.Add("ActiveUser", activeUser);
+            myReviewDict.Add("Review", review);
+
+            var query2 = new Neo4jClient.Cypher.CypherQuery("match (u)-[r:LIKED]->(a) where u.Username = '"+activeUser+"' and a.Text = '"+review+"' return r{User:u,Review:a}",
+                                                         myReviewDict, CypherResultMode.Set);
+            List<UserReviewLikes> likes = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query2).ToList();
+
+            num.Items.Add(likes.Count.ToString());
+            for (int i = 0;i < likes.Count;i++)
+            {
+                whoLikedListBox.Items.Add(likes.ElementAt(i).User.Username);
+            }
         }
     }
 }

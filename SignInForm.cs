@@ -51,6 +51,18 @@ namespace BookClub
                 MainForm mainForm = new MainForm();
                 mainForm.client = client;
                 mainForm.ShowDialog();
+                MessageBox.Show("Uspesno ste se prijavili!");
+                //QuoteForm quoteForm = new QuoteForm();
+                //quoteForm.client = client;
+                //quoteForm.ShowDialog();
+
+                BookForm bookForm = new BookForm();
+                bookForm.client = client;
+                bookForm.ShowDialog();
+
+                //MainUserForm mainuserForm = new MainUserForm();
+                //mainuserForm.client = client;
+                //mainuserForm.ShowDialog();
             }
 
         }

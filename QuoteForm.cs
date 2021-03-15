@@ -19,30 +19,19 @@ namespace BookClub
 
         private void myQuoteButton_Click(object sender, EventArgs e)
         {
-            String UploadedBy = ".*" + Global.ActiveUser.Username + ".*";
+            String activeUser = Global.ActiveUser.Username;
 
             Dictionary<string, object> myQuotesDict = new Dictionary<string, object>();
-            myQuotesDict.Add("UploadedBy", UploadedBy);
+            myQuotesDict.Add("ActiveUser", activeUser);
 
-            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (q)-[r:UPLOADED_BY]->(u) where u.Username =~ {UploadedBy} return r",
+            var query = new Neo4jClient.Cypher.CypherQuery("match (u)-[r1:ADDED]->(q)-[r:TAKENFROM]->(b) where u.Username =~ {ActiveUser} return r1{Quote:q, Book:b}",
                                                          myQuotesDict, CypherResultMode.Set);
+            List<QuoteBook> uploadedQuotes = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(query).ToList();
 
-            List<Quote> uploadedQuotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Quote>(query).ToList();
-
-
-            Dictionary<string, object> quoteBookDict = new Dictionary<string, object>();
-            List<QuoteBook> books;
-            foreach (var quote in uploadedQuotes)
+            for (int i = 0; i < uploadedQuotes.Count; i++)
             {
-                String BookName = ".*" +
-                Quotes.Items.Add(quote.Text);
-                quoteBookDict.Add("Text", quote.Text);
-                var queryBooks = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (q)-[r:ISEXTRACTEDFROM]->(b) where b.Name =~ {BookName} return r{Quote:q}",
-                     quoteBookDict, CypherResultMode.Set);
-                books = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(queryBooks).ToList();
-                Books.Items.Add(books.ElementAt(0).Book.Name);
-                myQuotesDict.Remove("BookName");
-
+                Books.Items.Add(uploadedQuotes.ElementAt(i).Book.Name);
+                Quotes.Items.Add(uploadedQuotes.ElementAt(i).Quote.Text);
             }
         }
 
@@ -52,5 +41,6 @@ namespace BookClub
             addQuoteForm.client = client;
             addQuoteForm.ShowDialog();
         }
+
     }
 }

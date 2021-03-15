@@ -3,11 +3,7 @@ using Neo4jClient;
 using Neo4jClient.Cypher;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BookClub
@@ -27,6 +23,11 @@ namespace BookClub
 
         private void signIn(object sender, MouseEventArgs e)
         {
+            if (usernameInput.TextLength == 0 || passwordInput.TextLength == 0)
+            {
+                MessageBox.Show("Please enter username and password!");
+                return;
+            }
             String Username = ".*" + usernameInput.Text + ".*";
             String Password = ".*" + passwordInput.Text + ".*";
 
@@ -41,23 +42,15 @@ namespace BookClub
 
             if(users.Count == 0)
             {
-                MessageBox.Show("Username ili Password nisu ispravni! Pokusajte ponovo!");
+                MessageBox.Show("Username or Password not valid! Try again!");
             }
             else
             {
                 Help.Global.ActiveUser = users.ElementAt(0);
-                MessageBox.Show("Uspesno ste se prijavili!");
-                //QuoteForm quoteForm = new QuoteForm();
-                //quoteForm.client = client;
-                //quoteForm.ShowDialog();
-
-                BookForm bookForm = new BookForm();
-                bookForm.client = client;
-                bookForm.ShowDialog();
-
-                //MainUserForm mainuserForm = new MainUserForm();
-                //mainuserForm.client = client;
-                //mainuserForm.ShowDialog();
+                MessageBox.Show("You logged in successfully");
+                MainForm mainForm = new MainForm();
+                mainForm.client = client;
+                mainForm.ShowDialog();
             }
 
         }

@@ -72,6 +72,7 @@ namespace BookClub
             this.Controls.Add(this.addQuoteButton);
             this.Name = "AddQuoteForm";
             this.Text = "AddQuoteForm";
+            this.Load += new System.EventHandler(this.AddQuoteForm_Load_1);
             this.ResumeLayout(false);
 
         }

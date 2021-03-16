@@ -17,18 +17,6 @@ namespace BookClub
             InitializeComponent();
         }
 
-        private void AddQuoteForm_Load(object sender, EventArgs e)
-        {
-            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (b:Book) return distinct b",
-                                                         new Dictionary<string, object>(), CypherResultMode.Set);
-
-            List<Book> books = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).ToList();
-
-            foreach (Book b in books)
-            {
-                quoteComboBox.Items.Add(b.Name);
-            }
-        }
         private void quoteComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -154,6 +142,19 @@ namespace BookClub
                 e.Cancel = false;
                 errorProvider1.SetError(quoteTextBox, null);
             }*/
+        }
+
+        private void AddQuoteForm_Load_1(object sender, EventArgs e)
+        {
+            var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (b:Book) return distinct b",
+                                                         new Dictionary<string, object>(), CypherResultMode.Set);
+
+            List<Book> books = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).ToList();
+
+            foreach (Book b in books)
+            {
+                quoteComboBox.Items.Add(b.Name);
+            }
         }
     }
 }

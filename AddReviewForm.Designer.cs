@@ -37,6 +37,7 @@ namespace BookClub
             // 
             // reviewComboBox
             // 
+            this.reviewComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reviewComboBox.FormattingEnabled = true;
             this.reviewComboBox.Location = new System.Drawing.Point(307, 75);
             this.reviewComboBox.Name = "reviewComboBox";

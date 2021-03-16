@@ -34,12 +34,7 @@ namespace BookClub
             this.Quotes = new System.Windows.Forms.ListBox();
             this.Books = new System.Windows.Forms.ListBox();
             this.deleteQuoteBtn = new System.Windows.Forms.Button();
-            this.myBookmarksBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.searchByNameBtn = new System.Windows.Forms.Button();
-            this.searchByWriterBtn = new System.Windows.Forms.Button();
-            this.bookmarkBtn = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.findQuotesBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // myQuoteButton
@@ -54,7 +49,7 @@ namespace BookClub
             // 
             // addQuoteButton
             // 
-            this.addQuoteButton.Location = new System.Drawing.Point(56, 102);
+            this.addQuoteButton.Location = new System.Drawing.Point(56, 112);
             this.addQuoteButton.Name = "addQuoteButton";
             this.addQuoteButton.Size = new System.Drawing.Size(147, 64);
             this.addQuoteButton.TabIndex = 2;
@@ -82,7 +77,7 @@ namespace BookClub
             // 
             // deleteQuoteBtn
             // 
-            this.deleteQuoteBtn.Location = new System.Drawing.Point(56, 184);
+            this.deleteQuoteBtn.Location = new System.Drawing.Point(56, 192);
             this.deleteQuoteBtn.Name = "deleteQuoteBtn";
             this.deleteQuoteBtn.Size = new System.Drawing.Size(147, 64);
             this.deleteQuoteBtn.TabIndex = 5;
@@ -90,72 +85,22 @@ namespace BookClub
             this.deleteQuoteBtn.UseVisualStyleBackColor = true;
             this.deleteQuoteBtn.Click += new System.EventHandler(this.deleteQuoteBtn_Click);
             // 
-            // myBookmarksBtn
+            // findQuotesBtn
             // 
-            this.myBookmarksBtn.Location = new System.Drawing.Point(56, 344);
-            this.myBookmarksBtn.Name = "myBookmarksBtn";
-            this.myBookmarksBtn.Size = new System.Drawing.Size(147, 64);
-            this.myBookmarksBtn.TabIndex = 6;
-            this.myBookmarksBtn.Text = "My bookmarks";
-            this.myBookmarksBtn.UseVisualStyleBackColor = true;
-            this.myBookmarksBtn.Click += new System.EventHandler(this.myBookmarksBtn_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(290, 254);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 20);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Enter full or part of the quote/writer:";
-            // 
-            // searchByNameBtn
-            // 
-            this.searchByNameBtn.Location = new System.Drawing.Point(521, 286);
-            this.searchByNameBtn.Name = "searchByNameBtn";
-            this.searchByNameBtn.Size = new System.Drawing.Size(135, 58);
-            this.searchByNameBtn.TabIndex = 8;
-            this.searchByNameBtn.Text = "Search quotes by its part or content";
-            this.searchByNameBtn.UseVisualStyleBackColor = true;
-            // 
-            // searchByWriterBtn
-            // 
-            this.searchByWriterBtn.Location = new System.Drawing.Point(521, 350);
-            this.searchByWriterBtn.Name = "searchByWriterBtn";
-            this.searchByWriterBtn.Size = new System.Drawing.Size(135, 58);
-            this.searchByWriterBtn.TabIndex = 9;
-            this.searchByWriterBtn.Text = "Search quotes by its writer";
-            this.searchByWriterBtn.UseVisualStyleBackColor = true;
-            // 
-            // bookmarkBtn
-            // 
-            this.bookmarkBtn.Location = new System.Drawing.Point(56, 267);
-            this.bookmarkBtn.Name = "bookmarkBtn";
-            this.bookmarkBtn.Size = new System.Drawing.Size(147, 64);
-            this.bookmarkBtn.TabIndex = 11;
-            this.bookmarkBtn.Text = "Bookmark";
-            this.bookmarkBtn.UseVisualStyleBackColor = true;
-            this.bookmarkBtn.Click += new System.EventHandler(this.bookmarkBtn_Click);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(290, 286);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(225, 122);
-            this.richTextBox1.TabIndex = 12;
-            this.richTextBox1.Text = "";
+            this.findQuotesBtn.Location = new System.Drawing.Point(56, 272);
+            this.findQuotesBtn.Name = "findQuotesBtn";
+            this.findQuotesBtn.Size = new System.Drawing.Size(147, 64);
+            this.findQuotesBtn.TabIndex = 13;
+            this.findQuotesBtn.Text = "Find quotes";
+            this.findQuotesBtn.UseVisualStyleBackColor = true;
+            this.findQuotesBtn.Click += new System.EventHandler(this.findQuotesBtn_Click);
             // 
             // QuoteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.bookmarkBtn);
-            this.Controls.Add(this.searchByWriterBtn);
-            this.Controls.Add(this.searchByNameBtn);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.myBookmarksBtn);
+            this.Controls.Add(this.findQuotesBtn);
             this.Controls.Add(this.deleteQuoteBtn);
             this.Controls.Add(this.Books);
             this.Controls.Add(this.Quotes);
@@ -164,7 +109,6 @@ namespace BookClub
             this.Name = "QuoteForm";
             this.Text = "QuoteForm";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -175,11 +119,6 @@ namespace BookClub
         private System.Windows.Forms.ListBox Quotes;
         private System.Windows.Forms.ListBox Books;
         private System.Windows.Forms.Button deleteQuoteBtn;
-        private System.Windows.Forms.Button myBookmarksBtn;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button searchByNameBtn;
-        private System.Windows.Forms.Button searchByWriterBtn;
-        private System.Windows.Forms.Button bookmarkBtn;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button findQuotesBtn;
     }
 }

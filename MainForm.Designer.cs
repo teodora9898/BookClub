@@ -37,9 +37,9 @@ namespace BookClub
             // 
             // reviewButton
             // 
-            this.reviewButton.Location = new System.Drawing.Point(107, 55);
+            this.reviewButton.Location = new System.Drawing.Point(217, 125);
             this.reviewButton.Name = "reviewButton";
-            this.reviewButton.Size = new System.Drawing.Size(94, 29);
+            this.reviewButton.Size = new System.Drawing.Size(137, 60);
             this.reviewButton.TabIndex = 0;
             this.reviewButton.Text = "Reviews";
             this.reviewButton.UseVisualStyleBackColor = true;
@@ -47,9 +47,9 @@ namespace BookClub
             // 
             // booksButton
             // 
-            this.booksButton.Location = new System.Drawing.Point(107, 129);
+            this.booksButton.Location = new System.Drawing.Point(409, 125);
             this.booksButton.Name = "booksButton";
-            this.booksButton.Size = new System.Drawing.Size(94, 29);
+            this.booksButton.Size = new System.Drawing.Size(137, 60);
             this.booksButton.TabIndex = 1;
             this.booksButton.Text = "Books";
             this.booksButton.UseVisualStyleBackColor = true;
@@ -57,9 +57,9 @@ namespace BookClub
             // 
             // quotesButton
             // 
-            this.quotesButton.Location = new System.Drawing.Point(107, 204);
+            this.quotesButton.Location = new System.Drawing.Point(217, 239);
             this.quotesButton.Name = "quotesButton";
-            this.quotesButton.Size = new System.Drawing.Size(94, 29);
+            this.quotesButton.Size = new System.Drawing.Size(137, 60);
             this.quotesButton.TabIndex = 3;
             this.quotesButton.Text = "Quotes";
             this.quotesButton.UseVisualStyleBackColor = true;
@@ -67,9 +67,9 @@ namespace BookClub
             // 
             // WritersButton
             // 
-            this.WritersButton.Location = new System.Drawing.Point(107, 276);
+            this.WritersButton.Location = new System.Drawing.Point(409, 239);
             this.WritersButton.Name = "WritersButton";
-            this.WritersButton.Size = new System.Drawing.Size(94, 29);
+            this.WritersButton.Size = new System.Drawing.Size(137, 60);
             this.WritersButton.TabIndex = 4;
             this.WritersButton.Text = "Writers";
             this.WritersButton.UseVisualStyleBackColor = true;

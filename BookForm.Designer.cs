@@ -42,6 +42,7 @@
             this.BackToMainFormBookButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.showBookInfoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // myBooksButton
@@ -177,11 +178,22 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Enter full or part of the\r\nname of the book/writer";
             // 
+            // showBookInfoButton
+            // 
+            this.showBookInfoButton.Location = new System.Drawing.Point(407, 38);
+            this.showBookInfoButton.Name = "showBookInfoButton";
+            this.showBookInfoButton.Size = new System.Drawing.Size(94, 50);
+            this.showBookInfoButton.TabIndex = 12;
+            this.showBookInfoButton.Text = "Show more info";
+            this.showBookInfoButton.UseVisualStyleBackColor = true;
+            this.showBookInfoButton.Click += new System.EventHandler(this.showBookInfoButton_Click);
+            // 
             // BookForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 599);
+            this.Controls.Add(this.showBookInfoButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BackToMainFormBookButton);
@@ -220,5 +232,6 @@
         private System.Windows.Forms.Button BackToMainFormBookButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button showBookInfoButton;
     }
 }

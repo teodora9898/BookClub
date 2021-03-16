@@ -112,6 +112,8 @@ namespace BookClub
 
             allWritersComboBox.Items.RemoveAt(index);
             writersBiographyTextBox.Clear();
+            allWritersComboBox.Text = " ";
+            MessageBox.Show("You have successfuly deleted the writer!");
         }
 
         private void BackToMainFormWriterButton_Click(object sender, EventArgs e)

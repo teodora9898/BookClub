@@ -198,5 +198,30 @@ namespace BookClub
             mainForm.client = client;
             mainForm.ShowDialog();
         }
+
+        private void showBookInfoButton_Click(object sender, EventArgs e)
+        {
+            String bookName = Books.SelectedItem.ToString();
+            int index = Books.SelectedIndex;
+
+            Dictionary<string, object> queryDict = new Dictionary<string, object>();
+            queryDict.Add("bookName", bookName);
+
+
+
+            var query = new Neo4jClient.Cypher.CypherQuery("match (b:Book) where b.Name = {bookName} return b",
+                                                            queryDict, CypherResultMode.Set);
+
+            List<Book> books=((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query).ToList();
+
+            MessageBox.Show(
+                "Genre:"+" "+books[0].Genre.ToString()+"\n"+
+                "Publisher:"+" "+books[0].Publisher.ToString() + "\n" +
+                "Number of pages:" +" "+books[0].NumberOfPages.ToString() + "\n" +
+                "Year of publish:" +" "+books[0].YearOfPublish.ToString() + "\n" +
+                "Summary:" +" "+books[0].Summary.ToString()
+                );
+
+        }
     }
 }

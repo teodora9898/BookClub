@@ -220,6 +220,7 @@ namespace BookClub
 
             List<BookUser> bookUser = ((IRawGraphClient)client).ExecuteGetCypherResults<BookUser>(queryBookUser).ToList();
 
+            MessageBox.Show("You have successfully added book!");
 
 
         }

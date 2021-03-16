@@ -80,7 +80,10 @@ namespace BookClub
 
             List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query).ToList();
 
-            writersBiographyTextBox.Text = writers[0].Biography;
+            if(writers.Count!=0)
+            {
+                writersBiographyTextBox.Text = writers[0].Biography;
+            }
 
 
 

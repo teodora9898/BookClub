@@ -1,8 +1,8 @@
 ﻿namespace BookClub.Domain_models
 {
-    public class QuoteWriter
+    public class QuoteUserBookmark
     {
         public Quote Quote { get; set; }
-        public Writer Writer { get; set; }
+        public User User { get; set; }
     }
 }

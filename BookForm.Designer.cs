@@ -68,7 +68,7 @@
             // 
             this.Books.FormattingEnabled = true;
             this.Books.ItemHeight = 20;
-            this.Books.Location = new System.Drawing.Point(423, 94);
+            this.Books.Location = new System.Drawing.Point(407, 94);
             this.Books.Name = "Books";
             this.Books.Size = new System.Drawing.Size(232, 184);
             this.Books.TabIndex = 1;
@@ -78,7 +78,7 @@
             // 
             this.Writers.FormattingEnabled = true;
             this.Writers.ItemHeight = 20;
-            this.Writers.Location = new System.Drawing.Point(712, 94);
+            this.Writers.Location = new System.Drawing.Point(690, 94);
             this.Writers.Name = "Writers";
             this.Writers.Size = new System.Drawing.Size(232, 184);
             this.Writers.TabIndex = 1;

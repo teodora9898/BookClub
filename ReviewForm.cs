@@ -67,7 +67,7 @@ namespace BookClub
             var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) where (n:Review) and exists(n.Text) and n.Text =~ {Text} detach delete n",
                                                             queryDict, CypherResultMode.Projection);
 
-            List<Review> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+            List<Review> quotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
 
             MessageBox.Show("Review successfully deleted!");
             Reviews.Items.RemoveAt(itemIndex);
@@ -102,23 +102,26 @@ namespace BookClub
 
         private void Reviews_SelectedIndexChanged(object sender, EventArgs e)
         {
-            num.Items.Clear();
-            whoLikedListBox.Items.Clear();
-            String activeUser = Global.ActiveUser.Username;
-            String review = Reviews.SelectedItem.ToString();
-
-            Dictionary<string, object> myReviewDict = new Dictionary<string, object>();
-            myReviewDict.Add("ActiveUser", activeUser);
-            myReviewDict.Add("Review", review);
-
-            var query2 = new Neo4jClient.Cypher.CypherQuery("match (u)-[r:LIKED]->(a) where u.Username = '"+activeUser+"' and a.Text = '"+review+"' return r{User:u,Review:a}",
-                                                         myReviewDict, CypherResultMode.Set);
-            List<UserReviewLikes> likes = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query2).ToList();
-
-            num.Items.Add(likes.Count.ToString());
-            for (int i = 0;i < likes.Count;i++)
+            if (Reviews.SelectedIndex != -1)
             {
-                whoLikedListBox.Items.Add(likes.ElementAt(i).User.Username);
+                num.Items.Clear();
+                whoLikedListBox.Items.Clear();
+                String activeUser = Global.ActiveUser.Username;
+                String review = Reviews.SelectedItem.ToString();
+            
+                Dictionary<string, object> myReviewDict = new Dictionary<string, object>();
+                myReviewDict.Add("ActiveUser", activeUser);
+                myReviewDict.Add("Review", review);
+
+                var query2 = new Neo4jClient.Cypher.CypherQuery("match (u)-[r:LIKED]->(a) where u.Username = '" + activeUser + "' and a.Text = '" + review + "' return r{User:u,Review:a}",
+                                                             myReviewDict, CypherResultMode.Set);
+                List<UserReviewLikes> likes = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query2).ToList();
+
+                num.Items.Add(likes.Count.ToString());
+                for (int i = 0; i < likes.Count; i++)
+                {
+                    whoLikedListBox.Items.Add(likes.ElementAt(i).User.Username);
+                }
             }
         }
     }

@@ -108,20 +108,24 @@ namespace BookClub
 
         private void likeBtn_Click(object sender, EventArgs e)
         {
-            Dictionary<string, object> queryLikeDict = new Dictionary<string, object>();
-            queryLikeDict.Add("Username", Global.ActiveUser.Username);
-            queryLikeDict.Add("Text", Reviews.SelectedItem.ToString());
             String review = Reviews.SelectedItem.ToString();
-            var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:User),(b:Review)" +
-                                                            "WHERE a.Username =~ {Username} AND b.Text =~ {Text} " +
-                                                            "CREATE(a) -[r:LIKED]->(b)" +
-                                                             "RETURN r{User:a, Review:b}",
-                                                           queryLikeDict, CypherResultMode.Set);
-
-            List<UserReviewLikes> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query3).ToList();
             if (!Likes.Items.Contains(review))
             {
-                Likes.Items.Add(review);
+                Dictionary<string, object> queryLikeDict = new Dictionary<string, object>();
+                queryLikeDict.Add("Username", Global.ActiveUser.Username);
+                queryLikeDict.Add("Text", Reviews.SelectedItem.ToString());
+
+                var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:User),(b:Review)" +
+                                                                "WHERE a.Username =~ {Username} AND b.Text =~ {Text} " +
+                                                                "CREATE(a) -[r:LIKED]->(b)" +
+                                                                 "RETURN r{User:a, Review:b}",
+                                                               queryLikeDict, CypherResultMode.Set);
+
+                List<UserReviewLikes> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReviewLikes>(query3).ToList();
+                if (!Likes.Items.Contains(review))
+                {
+                    Likes.Items.Add(review);
+                }
             }
         }
         

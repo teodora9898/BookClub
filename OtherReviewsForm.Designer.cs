@@ -43,6 +43,7 @@ namespace BookClub
             this.Likes = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.usernameTextBox = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // findReviewBtn
@@ -174,11 +175,21 @@ namespace BookClub
             this.usernameTextBox.Size = new System.Drawing.Size(138, 164);
             this.usernameTextBox.TabIndex = 13;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(823, 203);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 20);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Username:";
+            // 
             // OtherReviewsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 559);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.usernameTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Likes);
@@ -217,5 +228,6 @@ namespace BookClub
         private System.Windows.Forms.ListBox Likes;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox usernameTextBox;
+        private System.Windows.Forms.Label label5;
     }
 }

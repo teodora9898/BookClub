@@ -30,7 +30,7 @@ namespace BookClub
             SignInForm signInForm = new SignInForm();
             signInForm.client = client;
             signInForm.ShowDialog();
- 
+
         }
 
         private void signUpUser(object sender, MouseEventArgs e)

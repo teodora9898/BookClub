@@ -57,48 +57,55 @@ namespace BookClub
 
         private void addReviewBtn_Click(object sender, EventArgs e)
         {
-            if (reviewComboBox.SelectedIndex < 0)
+            if (!String.IsNullOrEmpty(reviewTextBox.Text))
             {
-                MessageBox.Show("You must choose a book you want to add review for!");
-                return;
+                if (reviewComboBox.SelectedIndex < 0)
+                {
+                    MessageBox.Show("You must choose a book you want to add review for!");
+                    return;
+                }
+
+                Tuple<Review, UserReview, BookReview> review = this.createReview();
+
+                Dictionary<string, object> queryReviewDict = new Dictionary<string, object>();
+
+                var query = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Review {Text:'" + review.Item1.Text +
+                                                                "'}) return n",
+                                                                queryReviewDict, CypherResultMode.Set);
+
+                List<Review> quotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
+
+                foreach (Review r in quotes)
+                {
+                    MessageBox.Show("Successfully added review!");
+                }
+
+                Dictionary<string, object> queryUserReviewDict = new Dictionary<string, object>();
+                queryUserReviewDict.Add("Text", review.Item2.Review.Text);
+                queryUserReviewDict.Add("Username", review.Item2.User.Username);
+
+                var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:User),(b:Review)" +
+                                                                "WHERE a.Username =~ {Username} AND b.Text =~ {Text} CREATE(a) -[r:UPPLOADED]->(b)" +
+                                                                 "RETURN r{User:a, Review:b}",
+                                                                queryUserReviewDict, CypherResultMode.Set);
+
+                List<UserReview> quotes2 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query2).ToList();
+
+                Dictionary<string, object> queryBookReviewDict = new Dictionary<string, object>();
+                queryBookReviewDict.Add("ReviewText", review.Item3.Review.Text);
+                queryBookReviewDict.Add("Title", review.Item3.Book.Name);
+
+                var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:Review),(b:Book)" +
+                                                                "WHERE a.Text =~ {ReviewText} AND b.Name =~ {Title} CREATE(a) -[r:IS_FROM]->(b)" +
+                                                                 "RETURN r{Review:a, Book:b}",
+                                                               queryBookReviewDict, CypherResultMode.Set);
+
+                List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
             }
-
-            Tuple<Review, UserReview, BookReview> review = this.createReview();
-            
-            Dictionary<string, object> queryReviewDict = new Dictionary<string, object>();
-
-            var query = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Review {Text:'" + review.Item1.Text +
-                                                            "'}) return n",
-                                                            queryReviewDict, CypherResultMode.Set);
-
-            List<Review> quotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
-
-            foreach (Review r in quotes)
+            else
             {
-                MessageBox.Show("Successfully added review!");
+                MessageBox.Show("You have to insert review!");
             }
-
-            Dictionary<string, object> queryUserReviewDict = new Dictionary<string, object>();
-            queryUserReviewDict.Add("Text", review.Item2.Review.Text);
-            queryUserReviewDict.Add("Username", review.Item2.User.Username);
-
-            var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:User),(b:Review)" +
-                                                            "WHERE a.Username =~ {Username} AND b.Text =~ {Text} CREATE(a) -[r:UPPLOADED]->(b)" +
-                                                             "RETURN r{User:a, Review:b}",
-                                                            queryUserReviewDict, CypherResultMode.Set);
-            
-            List<UserReview> quotes2 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query2).ToList();
-
-            Dictionary<string, object> queryBookReviewDict = new Dictionary<string, object>();
-            queryBookReviewDict.Add("ReviewText", review.Item3.Review.Text);
-            queryBookReviewDict.Add("Title", review.Item3.Book.Name);
-
-            var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:Review),(b:Book)" +
-                                                            "WHERE a.Text =~ {ReviewText} AND b.Name =~ {Title} CREATE(a) -[r:IS_FROM]->(b)" +
-                                                             "RETURN r{Review:a, Book:b}",
-                                                           queryBookReviewDict, CypherResultMode.Set);
-
-            List<UserReview> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<UserReview>(query3).ToList();
         }
     }
 }

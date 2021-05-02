@@ -50,7 +50,7 @@ namespace BookClub
             signUpQueryDict.Add("Name", u.Name);
             signUpQueryDict.Add("Lastname", u.Lastname);
             signUpQueryDict.Add("Username", u.Username);
-            signUpQueryDict.Add("Password",u.Password);
+            signUpQueryDict.Add("Password", u.Password);
 
             var query = new Neo4jClient.Cypher.CypherQuery("start n=node(*) match (n:User) where n.Username =~ {Username} return n",
                                                            signUpQueryDict, CypherResultMode.Set);

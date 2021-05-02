@@ -36,7 +36,7 @@ namespace BookClub
 
 
             };
-         
+
             var queryWriter = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Writer {Name:'" + writer.Name
                                                           + "', Lastname:'" + writer.Lastname
                                                           + "', Birthday:'" + writer.Birthday

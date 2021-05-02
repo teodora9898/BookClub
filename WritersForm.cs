@@ -3,11 +3,7 @@ using Neo4jClient;
 using Neo4jClient.Cypher;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BookClub
@@ -80,7 +76,7 @@ namespace BookClub
 
             List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query).ToList();
 
-            if(writers.Count!=0)
+            if (writers.Count != 0)
             {
                 writersBiographyTextBox.Text = writers[0].Biography;
             }
@@ -91,29 +87,35 @@ namespace BookClub
 
         private void DeleteWriterButton_Click(object sender, EventArgs e)
         {
-            
-            String writer = allWritersComboBox.SelectedItem.ToString();
-            int index = allWritersComboBox.SelectedIndex;
-            String writersName = writer.Split(' ')[0].ToString();
-            String writersLastname = writer.Split(' ')[1].ToString();
+            if (allWritersComboBox.SelectedIndex >= 0)
+            {
+                String writer = allWritersComboBox.SelectedItem.ToString();
+                int index = allWritersComboBox.SelectedIndex;
+                String writersName = writer.Split(' ')[0].ToString();
+                String writersLastname = writer.Split(' ')[1].ToString();
 
-            Dictionary<string, object> queryDict = new Dictionary<string, object>();
-            queryDict.Add("writerName", writersName);
-            queryDict.Add("writerLastname", writersLastname);
+                Dictionary<string, object> queryDict = new Dictionary<string, object>();
+                queryDict.Add("writerName", writersName);
+                queryDict.Add("writerLastname", writersLastname);
 
 
 
-            var query = new Neo4jClient.Cypher.CypherQuery("match (w:Writer{Name:{writerName} , Lastname:{writerLastname}})" +
-                                                             "optional match (w)-[r:WROTE]->(b:Book)"+
-                                                             " detach delete b, w",
-                                                            queryDict, CypherResultMode.Projection);
+                var query = new Neo4jClient.Cypher.CypherQuery("match (w:Writer{Name:{writerName} , Lastname:{writerLastname}})" +
+                                                                 "optional match (w)-[r:WROTE]->(b:Book)" +
+                                                                 " detach delete b, w",
+                                                                queryDict, CypherResultMode.Projection);
 
-            ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query);
+                ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(query);
 
-            allWritersComboBox.Items.RemoveAt(index);
-            writersBiographyTextBox.Clear();
-            allWritersComboBox.Text = " ";
-            MessageBox.Show("You have successfuly deleted the writer!");
+                allWritersComboBox.Items.RemoveAt(index);
+                writersBiographyTextBox.Clear();
+                allWritersComboBox.Text = " ";
+                MessageBox.Show("You have successfuly deleted the writer!");
+            }
+            else
+            {
+                MessageBox.Show("You have to choose a writer you want to delete!");
+            }
         }
 
         private void BackToMainFormWriterButton_Click(object sender, EventArgs e)

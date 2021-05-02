@@ -40,7 +40,7 @@ namespace BookClub
 
             List<User> users = ((IRawGraphClient)client).ExecuteGetCypherResults<User>(query).ToList();
 
-            if(users.Count == 0)
+            if (users.Count == 0)
             {
                 MessageBox.Show("Username or Password not valid! Try again!");
             }

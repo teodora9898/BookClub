@@ -73,7 +73,8 @@ namespace BookClub
 
                 List<QuoteUserBookmark> actors = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteUserBookmark>(query).ToList();
                 Quotes.Items.RemoveAt(quoteIndex);
-                Books.Items.RemoveAt(quoteIndex);
+                Books.Items.Clear();
+
             }
             else
             {
@@ -85,6 +86,8 @@ namespace BookClub
                 List<QuoteUserBookmark> quote = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteUserBookmark>(queryBookmark).ToList();
             }
         }
+
+
 
         private void searchByWriterBtn_Click(object sender, EventArgs e)
         {
@@ -136,3 +139,4 @@ namespace BookClub
         }
     }
 }
+

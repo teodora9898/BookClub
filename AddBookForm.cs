@@ -3,9 +3,6 @@ using Neo4jClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using BookClub.Help;
 using Neo4jClient.Cypher;
@@ -55,11 +52,7 @@ namespace BookClub
                 NumberOfPages = numberOfPagesnumericUpDown.Value.ToString(),
                 YearOfPublish = yearOfPublishnumericUpDown.Value.ToString()
             };
-            /*
-             writer je vec doda posebnom metodom u bazu, ovde se uzima samo njegovo ime i prez
-            da bi mogli da pristupimo topm cvoru i napravimo vezu sa njim
-             */
-          
+
             var comboBoxInput = writersComboBox.SelectedItem.ToString();
             Writer writer = new Writer()
             {
@@ -71,7 +64,7 @@ namespace BookClub
             {
                 Book = book,
                 Writer = writer,
-           
+
             };
             BookUser bookUser = new BookUser()
             {
@@ -91,7 +84,7 @@ namespace BookClub
 
         private void bookNameTextBox_Validating(object sender, CancelEventArgs e)
         {
-            if(string.IsNullOrEmpty(bookNameTextBox.Text))
+            if (string.IsNullOrEmpty(bookNameTextBox.Text))
             {
                 e.Cancel = true;
                 bookNameTextBox.Focus();
@@ -104,38 +97,6 @@ namespace BookClub
                 errorProvider1.SetError(bookNameTextBox, null);
             }
         }
-
-        //private void writerNameTextBox_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (string.IsNullOrEmpty(writerNameTextBox.Text))
-        //    {
-        //        e.Cancel = true;
-        //        writerNameTextBox.Focus();
-        //        errorProvider2.SetError(writerNameTextBox, "Writer's name is required!");
-
-        //    }
-        //    else
-        //    {
-        //        e.Cancel = false;
-        //        errorProvider2.SetError(writerNameTextBox, null);
-        //    }
-        //}
-
-        //private void writerLastnameTextBox_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (string.IsNullOrEmpty(writerLastnameTextBox.Text))
-        //    {
-        //        e.Cancel = true;
-        //        writerLastnameTextBox.Focus();
-        //        errorProvider3.SetError(writerLastnameTextBox, "Writer's last name is required!");
-
-        //    }
-        //    else
-        //    {
-        //        e.Cancel = false;
-        //        errorProvider3.SetError(writerLastnameTextBox, null);
-        //    }
-        //}
 
         private void backButton_Click(object sender, EventArgs e)
         {
@@ -173,7 +134,7 @@ namespace BookClub
                                                            + "'}) return n",
                                                            bookDict, CypherResultMode.Set);
             List<Book> books = ((IRawGraphClient)client).ExecuteGetCypherResults<Book>(queryBook).ToList();
-           
+
             Dictionary<string, object> writerDict = new Dictionary<string, object>();
             writerDict.Add("Name", bookAndWriter.Item2.Name);
             writerDict.Add("Lastname", bookAndWriter.Item2.Lastname);
@@ -184,14 +145,10 @@ namespace BookClub
             List<Writer> writers = ((IRawGraphClient)client).ExecuteGetCypherResults<Writer>(query).ToList();
 
             Dictionary<string, object> bookWriterDict = new Dictionary<string, object>();
-            //todo sta bese interesting facts?
-            // bookWriterDict.Add("InterestingFacts", bookAndWriter.Item3.InterestingFacts);
+
             bookWriterDict.Add("BookName", BookName);
             bookWriterDict.Add("WriterName", writers.ElementAt(0).Name);
             bookWriterDict.Add("WriterLastname", writers.ElementAt(0).Lastname);
-            //todo interesting facts i additional information treba da postoje za vezu izmedju pisca i knjige
-            //vidi na koji ces nacin to da postignes!
-
 
 
             var queryBookWriter = new Neo4jClient.Cypher.CypherQuery("MATCH (b:Book), (w:Writer) WHERE b.Name =~ {BookName} " +
@@ -221,8 +178,6 @@ namespace BookClub
             List<BookUser> bookUser = ((IRawGraphClient)client).ExecuteGetCypherResults<BookUser>(queryBookUser).ToList();
 
             MessageBox.Show("You have successfully added book!");
-
-
         }
     }
 }

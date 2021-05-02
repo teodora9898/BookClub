@@ -19,7 +19,7 @@ namespace BookClub
 
         private void quoteComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter> createQuote()
@@ -59,73 +59,69 @@ namespace BookClub
 
         private void addQuoteButton_Click(object sender, EventArgs e)
         {
-            if (quoteComboBox.SelectedIndex < 0)
+            if (!String.IsNullOrEmpty(quoteTextBox.Text))
             {
-                MessageBox.Show("You must choose a book you want to add quote for!") ;
-                return;
+                if (quoteComboBox.SelectedIndex < 0)
+                {
+                    MessageBox.Show("You must choose a book you want to add quote for!");
+                    return;
+                }
+
+                Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter> quote = this.createQuote();
+
+                Dictionary<string, object> queryBookDict = new Dictionary<string, object>();
+
+                var query = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Quote {Text:'" + quote.Item1.Text + "', UploadedBy:'" + quote.Item1.UploadedBy
+                                                                + "'}) return n",
+                                                                queryBookDict, CypherResultMode.Set);
+
+                List<Quote> quotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Quote>(query).ToList();
+
+                foreach (Quote q in quotes)
+                {
+                    MessageBox.Show("Successfully added quote!");
+                }
+
+                Dictionary<string, object> queryQuoteBookDict = new Dictionary<string, object>();
+                queryQuoteBookDict.Add("Text", quote.Item2.Quote.Text);
+                queryQuoteBookDict.Add("BookName", quote.Item2.Book.Name);
+
+
+
+                var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:Quote),(b:Book)" +
+                                                                "WHERE a.Text =~ {Text} AND b.Name =~ {BookName} CREATE(a) -[r:TAKENFROM]->(b)" +
+                                                                 "RETURN r{Quote:a, Book:b}",
+                                                                queryQuoteBookDict, CypherResultMode.Set);
+
+                List<QuoteBook> quotes2 = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(query2).ToList();
+
+                Dictionary<string, object> queryQuoteUserDict = new Dictionary<string, object>();
+
+                queryQuoteUserDict.Add("Username", quote.Item3.User.Username);
+                queryQuoteUserDict.Add("Text", quote.Item3.Quote.Text);
+
+
+                var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH" +
+                                                                "(a:User)," +
+                                                                "(b:Quote)" +
+                                                                "WHERE a.Username =~ {Username} AND b.Text =~ {Text}" +
+                                                                "CREATE (a) -[r:ADDED]->(b)" +
+                                                                "RETURN r{User:a, Quote:b}",
+                                                                queryQuoteUserDict, CypherResultMode.Set);
+
+
+                List<QuoteUser> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteUser>(query3).ToList();
+
+
+                Dictionary<string, object> queryQuoteWriterDict = new Dictionary<string, object>();
+                queryQuoteWriterDict.Add("Text", quote.Item4.Quote.Text);
+                queryQuoteWriterDict.Add("WriterName", quote.Item4.Writer.Name);
+                this.Close();
             }
-
-            Tuple<Quote, QuoteBook, QuoteUser, QuoteWriter> quote = this.createQuote();
-
-            Dictionary<string, object> queryBookDict = new Dictionary<string, object>();
-
-            var query = new Neo4jClient.Cypher.CypherQuery("CREATE (n:Quote {Text:'" + quote.Item1.Text + "', UploadedBy:'" + quote.Item1.UploadedBy
-                                                            + "'}) return n",
-                                                            queryBookDict, CypherResultMode.Set);
-
-            List<Quote> quotes = ((IRawGraphClient)client).ExecuteGetCypherResults<Quote>(query).ToList();
-
-            foreach (Quote q in quotes)
+            else
             {
-                MessageBox.Show("Successfully added quote!");
+                MessageBox.Show("You have to insert a quote you want to add!");
             }
-
-            Dictionary<string, object> queryQuoteBookDict = new Dictionary<string, object>();
-            queryQuoteBookDict.Add("Text", quote.Item2.Quote.Text);
-            queryQuoteBookDict.Add("BookName", quote.Item2.Book.Name);
-
-
-
-            var query2 = new Neo4jClient.Cypher.CypherQuery("MATCH (a:Quote),(b:Book)" +
-                                                            "WHERE a.Text =~ {Text} AND b.Name =~ {BookName} CREATE(a) -[r:TAKENFROM]->(b)" +
-                                                             "RETURN r{Quote:a, Book:b}",
-                                                            queryQuoteBookDict, CypherResultMode.Set);
-
-            List<QuoteBook> quotes2 = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteBook>(query2).ToList();
-
-            Dictionary<string, object> queryQuoteUserDict = new Dictionary<string, object>();
-
-            queryQuoteUserDict.Add("Username", quote.Item3.User.Username);
-            queryQuoteUserDict.Add("Text", quote.Item3.Quote.Text);
-
-
-            var query3 = new Neo4jClient.Cypher.CypherQuery("MATCH" +
-                                                            "(a:User)," +
-                                                            "(b:Quote)" +
-                                                            "WHERE a.Username =~ {Username} AND b.Text =~ {Text}" +
-                                                            "CREATE (a) -[r:ADDED]->(b)" +
-                                                            "RETURN r{User:a, Quote:b}",
-                                                            queryQuoteUserDict, CypherResultMode.Set);
-
-
-            List<QuoteUser> quotes3 = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteUser>(query3).ToList();
-
-
-            Dictionary<string, object> queryQuoteWriterDict = new Dictionary<string, object>();
-            queryQuoteWriterDict.Add("Text", quote.Item4.Quote.Text);
-            queryQuoteWriterDict.Add("WriterName", quote.Item4.Writer.Name);
-
-            var query4 = new Neo4jClient.Cypher.CypherQuery("MATCH" +
-                                                            "(a:Quote)," +
-                                                            "(b:Writer)" +
-                                                            "WHERE a.Text =~ {Text} AND b.Name =~ {WriterName}" +
-                                                            "CREATE (a) -[r:IS_WRITTEN_BY]->(b)" +
-                                                            "RETURN r{Quote:a, Writer:b}",
-                                                            queryQuoteWriterDict, CypherResultMode.Set);
-
-            List<QuoteWriter> quotes4 = ((IRawGraphClient)client).ExecuteGetCypherResults<QuoteWriter>(query4).ToList();
-            //Vidi zasto ovaj zadnji deo nece!!
-            this.Close();
         }
 
         private void quoteTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)

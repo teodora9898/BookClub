@@ -84,8 +84,8 @@ namespace BookClub
             int itemIndex = Reviews.SelectedIndex;
             String ReviewText = Reviews.SelectedItem.ToString();
             String Update = updateTextBox.Text;
-            
-            var query = new Neo4jClient.Cypher.CypherQuery("Match(n) where (n:Review) and n.Text = '"+ ReviewText +"'  set n.Text = '"+ Update +"' return n",
+
+            var query = new Neo4jClient.Cypher.CypherQuery("Match(n) where (n:Review) and n.Text = '" + ReviewText + "'  set n.Text = '" + Update + "' return n",
                                                             new Dictionary<string, object>(), CypherResultMode.Set);
 
             List<Review> reviews = ((IRawGraphClient)client).ExecuteGetCypherResults<Review>(query).ToList();
@@ -108,7 +108,7 @@ namespace BookClub
                 whoLikedListBox.Items.Clear();
                 String activeUser = Global.ActiveUser.Username;
                 String review = Reviews.SelectedItem.ToString();
-            
+
                 Dictionary<string, object> myReviewDict = new Dictionary<string, object>();
                 myReviewDict.Add("ActiveUser", activeUser);
                 myReviewDict.Add("Review", review);
